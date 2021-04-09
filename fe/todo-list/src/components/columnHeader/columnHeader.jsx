@@ -3,7 +3,7 @@ import TaskCardCount from '../taskCardCount/taskCardCount';
 import Icon from '../icon/icon';
 import styled from 'styled-components';
 
-const ColumnHeader = props => {
+const ColumnHeader = () => {
   return (
     <ColumnHeaderContainer>
       <ColumnTitleBox>

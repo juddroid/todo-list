@@ -31,12 +31,10 @@ const Icon = ({ type }) => {
   }[type];
 };
 
-export default Icon;
-
 const IconButton = styled.button`
   color: ${(props) => (props.type === 'userAction' ? '#010101' : '#bdbdbd')};
   border: none;
-  background-color: transparent;
+  background: transparent;
   outline: none;
   cursor: pointer;
   font-size: 16px;
@@ -47,3 +45,4 @@ const IconButton = styled.button`
     }};
   }
 `;
+export default Icon;

@@ -5,31 +5,35 @@ import Icon from '../icon/icon';
 
 const DefaultTask = () => {
   return (
-    <TaskBox>
+    <TaskWrapper>
       <IconPosition>
         <Icon type="delete" />
       </IconPosition>
-      <TextArea>
-        <TaskTitle />
-        <TaskContents />
-        <Caption />
-      </TextArea>
-    </TaskBox>
+      <TaskBox>
+        <TextArea>
+          <TaskTitle />
+          <TaskContents />
+          <Caption />
+        </TextArea>
+      </TaskBox>
+    </TaskWrapper>
   );
 };
 
 const ActiveTask = ({ type }) => {
   return (
-    <TaskBox>
-      <TextArea>
-        <TaskTitle type={type} />
-        <TaskContents type={type} />
-      </TextArea>
-      <ButtonArea>
-        <Button type="cancel" name="취소" />
-        <Button type="submit" name="등록" />
-      </ButtonArea>
-    </TaskBox>
+    <TaskWrapper>
+      <TaskBox>
+        <TextArea>
+          <TaskTitle type={type} />
+          <TaskContents type={type} />
+        </TextArea>
+        <ButtonArea>
+          <Button type="cancel" name="취소" />
+          <Button type="submit" name="등록" />
+        </ButtonArea>
+      </TaskBox>
+    </TaskWrapper>
   );
 };
 
@@ -50,11 +54,7 @@ const TaskContents = ({ type }) => {
 };
 
 const Caption = () => {
-  return (
-    <>
-      <TaskAuthorLabel>author by web</TaskAuthorLabel>
-    </>
-  );
+  return <TaskAuthorLabel>author by web</TaskAuthorLabel>;
 };
 
 const Card = ({ type }) => {
@@ -67,13 +67,9 @@ const Card = ({ type }) => {
 
 export default Card;
 
-const TaskBox = styled.div`
+const TaskWrapper = styled.div`
   position: relative;
   width: 300px;
-  background: #ffffff;
-  box-shadow: 0px 1px 30px rgba(224, 224, 224, 0.3);
-  border-radius: 6px;
-  padding: 10px 16px;
 
   & + div {
     margin-top: 20px;
@@ -128,4 +124,16 @@ const IconPosition = styled.div`
   position: absolute;
   top: 15px;
   right: 10px;
+`;
+
+const TaskBox = styled.div`
+  background: #fff;
+  box-shadow: 0px 1px 30px rgba(224, 224, 224, 0.3);
+  border-radius: 6px;
+  padding: 10px 16px;
+
+  ${IconPosition}:hover + & {
+    background: #ffeeec;
+    border: 1px solid #ff4343;
+  }
 `;
