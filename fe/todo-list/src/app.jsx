@@ -4,6 +4,7 @@ import Icon from './components/icon/icon';
 import TaskCardCount from './components/taskCardCount/taskCardCount';
 import ColumnHeader from './components/columnHeader/columnHeader';
 import Card from './components/card/card';
+import GetData from './components/getDataComponents/getData';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
       <Card type="drag" />
       <Card type="place" /> */}
       <Card type="deactivate" />
+      <GetData></GetData>
     </div>
   );
 }
