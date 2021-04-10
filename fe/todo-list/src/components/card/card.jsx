@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import Button from '../button/button';
 import Icon from '../icon/icon';
 
-const DefaultTask = () => {
+const DefaultTask = ({ key, title, content, author }) => {
   return (
     <TaskWrapper>
       <IconPosition>
@@ -11,9 +11,9 @@ const DefaultTask = () => {
       </IconPosition>
       <TaskBox>
         <TextArea>
-          <TaskTitle />
-          <TaskContents />
-          <Caption />
+          <TaskTitle title={title} />
+          <TaskContents content={content} />
+          <Caption author={author} />
         </TextArea>
       </TaskBox>
     </TaskWrapper>
@@ -37,29 +37,29 @@ const ActiveTask = ({ type }) => {
   );
 };
 
-const TaskTitle = ({ type }) => {
+const TaskTitle = ({ type, title }) => {
   return (
     <TitleBox>
-      <TaskTitleSpan type={type}>Title</TaskTitleSpan>
+      <TaskTitleSpan type={type}>{title}</TaskTitleSpan>
     </TitleBox>
   );
 };
 
-const TaskContents = ({ type }) => {
+const TaskContents = ({ type, content }) => {
   return (
     <ContentsBox>
-      <TaskContentsSpan type={type}>Body</TaskContentsSpan>
+      <TaskContentsSpan type={type}>{content}</TaskContentsSpan>
     </ContentsBox>
   );
 };
 
-const Caption = () => {
-  return <TaskAuthorLabel>author by web</TaskAuthorLabel>;
+const Caption = ({ author }) => {
+  return <TaskAuthorLabel>{author} by web</TaskAuthorLabel>;
 };
 
-const Card = ({ type }) => {
+const Card = ({ type, key, title, content, author }) => {
   return {
-    default: <DefaultTask />,
+    default: <DefaultTask key={key} title={title} content={content} author={author} />,
     active: <ActiveTask type={type} />,
     deactivate: <ActiveTask type={type} />,
   }[type];
@@ -69,7 +69,6 @@ export default Card;
 
 const TaskWrapper = styled.div`
   position: relative;
-  width: 300px;
 
   & + div {
     margin-top: 20px;
