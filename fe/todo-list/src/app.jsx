@@ -2,7 +2,6 @@ import './app.css';
 import Header from './components/view/header';
 import Body from './components/view/body';
 import styled from 'styled-components';
-import ActionCardList from './components/card/actionCardList';
 
 function App() {
   return (
@@ -10,7 +9,6 @@ function App() {
       <AppContainer>
         <Header />
         <Body />
-        <ActionCardList />
       </AppContainer>
     </div>
   );
@@ -19,8 +17,7 @@ function App() {
 export default App;
 
 const AppContainer = styled.div`
-  border: 1px solid red;
-  margin: 40px;
+  margin: 40px 0 40px 0;
   padding: 20px;
-  width: 1300px;
+  width: 100%;
 `;

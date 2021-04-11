@@ -40,4 +40,6 @@ const ColumnTitle = styled.span`
   margin-right: 10px;
 `;
 
-const ColumnButtonBox = styled.div``;
+const ColumnButtonBox = styled.div`
+  display: flex;
+`;

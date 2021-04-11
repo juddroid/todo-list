@@ -45,4 +45,5 @@ const IconButton = styled.button`
     }};
   }
 `;
+
 export default Icon;

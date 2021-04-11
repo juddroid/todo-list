@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import Button from '../button/button';
 import Icon from '../icon/icon';
 
-const DefaultTask = ({ key, title, content, author }) => {
+const DefaultTask = ({ title, content, author }) => {
   return (
     <TaskWrapper>
       <IconPosition>
@@ -57,9 +57,9 @@ const Caption = ({ author }) => {
   return <TaskAuthorLabel>{author} by web</TaskAuthorLabel>;
 };
 
-const Card = ({ type, key, title, content, author }) => {
+const Card = ({ type, title, content, author }) => {
   return {
-    default: <DefaultTask key={key} title={title} content={content} author={author} />,
+    default: <DefaultTask title={title} content={content} author={author} />,
     active: <ActiveTask type={type} />,
     deactivate: <ActiveTask type={type} />,
   }[type];

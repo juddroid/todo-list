@@ -29,7 +29,7 @@ const Body = () => {
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error!!!</div>;
   if (!data) return null;
-  console.log(data);
+
   return (
     <BodyContainer>
       {data.map((el) => (

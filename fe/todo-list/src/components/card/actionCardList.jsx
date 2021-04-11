@@ -3,10 +3,10 @@ import styled from 'styled-components';
 import Icon from '../icon/icon';
 import ActionCard from './actionCard';
 
-const ActionCardList = () => {
+const ActionCardList = ({ state, setState }) => {
   return (
-    <ActionCardContainer>
-      <IconPosition>
+    <ActionCardContainer state={state}>
+      <IconPosition onClick={setState}>
         <Icon type="delete" />
       </IconPosition>
       <ActionCardListBox>
@@ -22,17 +22,23 @@ const ActionCardList = () => {
 export default ActionCardList;
 
 const ActionCardContainer = styled.div`
-  display: flex;
+  /* display: ${(props) => (props.state === 'flex' ? 'flex' : 'none')}; */
+  position: absolute;
   flex-direction: column;
   align-items: flex-start;
-  padding: 40px;
+  padding: 30px 40px 40px 40px;
   box-sizing: content-box;
   background: #fff;
-  position: absolute;
   width: 332px;
-  height: 100%;
+  height: fit-content;
   right: 0;
-  top: 40px;
+  top: -10px;
+  opacity: ${(props) => (props.state === 'flex' ? '100%' : '0%')};
+  transform: ${(props) => (props.state === 'flex' ? 'translate3d(30px, 0px, 0px)' : 'translate3d(430px, 0px, 0px)')};
+  transition-duration: 0.4s;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  z-index: 1;
 `;
 
 const IconPosition = styled.div`
@@ -40,6 +46,7 @@ const IconPosition = styled.div`
   justify-content: flex-end;
   width: 100%;
   padding: 5px;
+  margin-right: 5px;
 `;
 
 const ActionCardListBox = styled.div`
