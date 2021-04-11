@@ -2,6 +2,7 @@ import './app.css';
 import Header from './components/view/header';
 import Body from './components/view/body';
 import styled from 'styled-components';
+import ActionCardList from './components/card/actionCardList';
 
 function App() {
   return (
@@ -9,6 +10,7 @@ function App() {
       <AppContainer>
         <Header />
         <Body />
+        <ActionCardList />
       </AppContainer>
     </div>
   );
