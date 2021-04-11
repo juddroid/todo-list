@@ -1,19 +1,45 @@
-import React from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Icon from '../icon/icon';
 import ActionCard from './actionCard';
 
 const ActionCardList = ({ state, setState }) => {
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setData(null);
+        setError(null);
+        setLoading(true);
+        const request = `/api/logs`;
+        const response = await axios.get(request);
+        setData(response.data);
+      } catch (error) {
+        setError(error);
+      }
+      setLoading(false);
+    };
+    fetchData();
+  }, []);
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error!!!</div>;
+  if (!data) return null;
+
+  console.log(data);
   return (
     <ActionCardContainer state={state}>
       <IconPosition onClick={setState}>
         <Icon type="delete" />
       </IconPosition>
       <ActionCardListBox>
-        <ActionCard />
-        <ActionCard />
-        <ActionCard />
-        <ActionCard />
+        {data.map((el) => (
+          <ActionCard key={el.id} data={el} />
+        ))}
       </ActionCardListBox>
     </ActionCardContainer>
   );

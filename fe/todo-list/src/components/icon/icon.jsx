@@ -1,24 +1,25 @@
 import React from 'react';
 import styled from 'styled-components';
+import { FaPlus, FaTimes, FaBars } from 'react-icons/fa';
 
 const AddButton = ({ type }) => {
   return (
     <IconButton type={type}>
-      <i className="fas fa-plus"></i>
+      <FaPlus />
     </IconButton>
   );
 };
 const DeleteButton = ({ type }) => {
   return (
     <IconButton type={type}>
-      <i className="fas fa-times"></i>
+      <FaTimes />
     </IconButton>
   );
 };
 const UserActionButton = ({ type }) => {
   return (
     <IconButton type={type}>
-      <i className="fas fa-bars"></i>
+      <FaBars />
     </IconButton>
   );
 };

@@ -13,42 +13,75 @@ const UserImage = () => {
 const UserName = ({ name }) => {
   return (
     <UserNameBox>
-      <span>{name}</span>
+      <span>{name || '@Autumn'}</span>
     </UserNameBox>
   );
 };
 
-const UserActionContents = () => {
+const UserActionContents = ({ action }) => {
+  const actionContents = action.split("' '").map((el) => el.replace("'", ''));
+
+  const [actionType, contents, from, to] = actionContents;
+
   return (
     <UserActionContentsBox>
-      <span>{`HTML/CSS Studying`}을 ToDo에서 여기로 이동하였습니다.</span>
+      <span>
+        {contents}을(를) {from}에서 {to}로 {actionType}하였습니다.{' '}
+      </span>
     </UserActionContentsBox>
   );
 };
 
-const ActionTime = () => {
+const ActionTime = ({ time }) => {
+  const createdDateTime = new Date(time);
+  const now = new Date();
+  const elapsedTime = now - createdDateTime;
+  const sec = elapsedTime / 1000;
+  const min = sec / 60;
+  const hour = min / 60;
+  const days = hour / 24;
+  let times = '';
+  let units = '';
+
+  if (min < 1) {
+    times = parseInt(sec);
+    units = 'sec';
+  }
+  if (hour < 1) {
+    times = parseInt(min);
+    units = 'mins';
+  }
+  if (days < 1) {
+    times = parseInt(hour);
+    units = 'hours';
+  }
+
   return (
     <ActionTimeBox>
-      <span>5 minutes ago</span>
+      <span>
+        {times} {units} ago
+      </span>
     </ActionTimeBox>
   );
 };
 
-const UserAction = () => {
+const UserAction = ({ data }) => {
+  const { action, authorName, createdDateTime } = data;
+
   return (
     <UserActionBox>
-      <UserName name="@Autumn" />
-      <UserActionContents />
-      <ActionTime />
+      <UserName name={authorName} />
+      <UserActionContents action={action} />
+      <ActionTime time={createdDateTime} />
     </UserActionBox>
   );
 };
 
-const ActionCard = () => {
+const ActionCard = ({ data }) => {
   return (
     <ActionCardBox>
       <UserImage />
-      <UserAction />
+      <UserAction data={data} />
     </ActionCardBox>
   );
 };

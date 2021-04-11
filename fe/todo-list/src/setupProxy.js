@@ -2,7 +2,7 @@ const { createProxyMiddleware } = require('http-proxy-middleware');
 
 module.exports = function (app) {
   app.use(
-    '/api/columns',
+    '/api',
     createProxyMiddleware({
       target: 'http://ec2-15-164-220-3.ap-northeast-2.compute.amazonaws.com:8080',
       changeOrigin: true,
