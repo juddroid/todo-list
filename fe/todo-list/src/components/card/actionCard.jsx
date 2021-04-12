@@ -25,9 +25,8 @@ const UserActionContents = ({ action }) => {
 
   return (
     <UserActionContentsBox>
-      <span>
-        {contents}을(를) {from}에서 {to}로 {actionType}하였습니다.{' '}
-      </span>
+      <span>{contents}</span> 을 <span>{from}</span> 에서
+      <span> {to}</span> 로 <span>{actionType}</span> 하였습니다.
     </UserActionContentsBox>
   );
 };
@@ -122,11 +121,15 @@ const UserNameBox = styled.div`
 `;
 
 const UserActionContentsBox = styled.div`
-  font-weight: bold;
-  font-size: 16px;
+  font-size: 14px;
   line-height: 23px;
   color: #010101;
   margin: 4px 0px;
+
+  & > span {
+    font-weight: bold;
+    font-size: 16px;
+  }
 `;
 
 const ActionTimeBox = styled.div`

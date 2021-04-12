@@ -41,6 +41,9 @@ const ActionCardList = ({ state, setState }) => {
         {data.map((el) => (
           <ActionCard key={el.id} data={el} />
         ))}
+        <ActionCard key="autumn" data={data[0]} />
+        <ActionCard key="nas" data={data[1]} />
+        <ActionCard key="jung" data={data[1]} />
       </ActionCardListBox>
     </ActionCardContainer>
   );
