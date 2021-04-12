@@ -46,12 +46,10 @@ const ActionTime = ({ time }) => {
   if (min < 1) {
     times = parseInt(sec);
     units = 'sec';
-  }
-  if (hour < 1) {
+  } else if (hour < 1) {
     times = parseInt(min);
     units = 'mins';
-  }
-  if (days < 1) {
+  } else if (days < 1) {
     times = parseInt(hour);
     units = 'hours';
   }

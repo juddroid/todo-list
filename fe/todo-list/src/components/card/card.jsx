@@ -25,8 +25,12 @@ const ActiveTask = ({ type }) => {
     <TaskWrapper>
       <TaskBox>
         <TextArea>
-          <TaskTitleForm />
-          <TaskContentsForm />
+          <TitleBox>
+            <TaskForm>
+              <TaskTitleForm />
+              <TaskContentsForm />
+            </TaskForm>
+          </TitleBox>
         </TextArea>
         <ButtonArea>
           <Button type="cancel" name="취소" />
@@ -38,23 +42,11 @@ const ActiveTask = ({ type }) => {
 };
 
 const TaskTitleForm = () => {
-  return (
-    <TitleBox>
-      <TaskForm>
-        <TaskTitleInput placeholder="제목을 입력하세요." />
-      </TaskForm>
-    </TitleBox>
-  );
+  return <TaskTitleInput placeholder="제목을 입력하세요" />;
 };
 
 const TaskContentsForm = () => {
-  return (
-    <TitleBox>
-      <TaskForm>
-        <TaskContentsInput placeholder="내용을 입력하세요." />
-      </TaskForm>
-    </TitleBox>
-  );
+  return <TaskContentsInput placeholder="내용을 입력하세요" />;
 };
 
 const TaskTitle = ({ type, title }) => {
@@ -161,6 +153,11 @@ const TaskBox = styled.div`
 
 const TaskForm = styled.form`
   width: 100%;
+  height: 100%;
+  padding: 0 4px;
+  box-shadow: 0px 0px 2px #828282;
+  border-radius: 10px;
+  margin: 4px 0 8px 0;
 `;
 
 const DefaultTaskInputStyle = styled.input`
@@ -186,4 +183,5 @@ const TaskTitleInput = styled(DefaultTaskInputStyle)`
 const TaskContentsInput = styled(DefaultTaskInputStyle)`
   margin-bottom: 10px;
   font-size: 14px;
+  height: 100%;
 `;
