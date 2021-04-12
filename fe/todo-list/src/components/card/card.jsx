@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled, { keyframes } from 'styled-components';
 import Button from '../button/button';
+import { STATE_ACTIVE, STATE_DISABLED } from '../const';
 import Icon from '../icon/icon';
 
 const DefaultTask = ({ title, content, author }) => {
@@ -21,14 +22,38 @@ const DefaultTask = ({ title, content, author }) => {
 };
 
 const ActiveTask = ({ cardState, cancelList }) => {
+  const [inputValue, setInputValue] = useState({
+    title: '',
+    contents: '',
+  });
+  const [buttonState, setButtonState] = useState(STATE_DISABLED);
+
+  const { title, contents } = inputValue;
+  const onChangeUserInput = (e) => {
+    const { name, value } = e.target;
+    setInputValue({
+      ...inputValue,
+      [name]: value,
+    });
+  };
+
+  const changeButtonState = (title, contents) => {
+    if (title === '' && contents === '') return setButtonState(STATE_DISABLED);
+    return setButtonState(STATE_ACTIVE);
+  };
+
+  useEffect(() => {
+    changeButtonState(title, contents);
+  }, [title, contents]);
+
   return (
     <TaskWrapper>
       <TaskBox>
         <TextArea>
           <TitleBox>
             <TaskForm>
-              <TaskTitleForm />
-              <TaskContentsForm />
+              <TaskTitleForm name="title" value={title} onChange={onChangeUserInput} />
+              <TaskContentsForm name="contents" value={contents} onChange={onChangeUserInput} />
             </TaskForm>
           </TitleBox>
         </TextArea>
@@ -37,7 +62,7 @@ const ActiveTask = ({ cardState, cancelList }) => {
             <Button type="cancel" name="취소" />
           </ButtonBox>
           <ButtonBox onClick={() => console.log('submit')}>
-            <Button type="submit" name="등록" cardState={cardState} />
+            <Button type="submit" name="등록" cardState={cardState} buttonState={buttonState} />
           </ButtonBox>
         </ButtonArea>
       </TaskBox>
@@ -45,12 +70,12 @@ const ActiveTask = ({ cardState, cancelList }) => {
   );
 };
 
-const TaskTitleForm = () => {
-  return <TaskTitleInput placeholder="제목을 입력하세요" />;
+const TaskTitleForm = ({ name, value, onChange }) => {
+  return <TaskTitleInput name={name} value={value} onChange={onChange} placeholder="제목을 입력하세요" autoFocus />;
 };
 
-const TaskContentsForm = () => {
-  return <TaskContentsInput placeholder="내용을 입력하세요" />;
+const TaskContentsForm = ({ name, value, onChange }) => {
+  return <TaskContentsInput name={name} value={value} onChange={onChange} placeholder="내용을 입력하세요" />;
 };
 
 const TaskTitle = ({ type, title }) => {

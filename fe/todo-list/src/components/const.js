@@ -1,3 +1,4 @@
 export const TITLE = `TO-DO LIST`;
-export const CARD_STATE_DEFAULT = 'default';
-export const CARD_STATE_ACTIVE = 'active';
+export const STATE_DEFAULT = 'default';
+export const STATE_DISABLED = 'disabled';
+export const STATE_ACTIVE = 'active';
