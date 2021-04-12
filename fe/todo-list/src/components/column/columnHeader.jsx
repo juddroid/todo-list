@@ -24,6 +24,8 @@ const ColumnHeaderContainer = styled.div`
   display: flex;
   justify-content: space-between;
   width: 300px;
+  padding: 0px 10px;
+  margin-bottom: 10px;
 `;
 
 const ColumnTitleBox = styled.div`
