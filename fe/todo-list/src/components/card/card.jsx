@@ -20,7 +20,7 @@ const DefaultTask = ({ title, content, author }) => {
   );
 };
 
-const ActiveTask = ({ cardState }) => {
+const ActiveTask = ({ cardState, cancelList }) => {
   return (
     <TaskWrapper>
       <TaskBox>
@@ -33,8 +33,12 @@ const ActiveTask = ({ cardState }) => {
           </TitleBox>
         </TextArea>
         <ButtonArea>
-          <Button type="cancel" name="취소" />
-          <Button type="submit" name="등록" cardState={cardState} />
+          <ButtonBox onClick={cancelList}>
+            <Button type="cancel" name="취소" />
+          </ButtonBox>
+          <ButtonBox onClick={() => console.log('submit')}>
+            <Button type="submit" name="등록" cardState={cardState} />
+          </ButtonBox>
         </ButtonArea>
       </TaskBox>
     </TaskWrapper>
@@ -69,10 +73,10 @@ const Caption = ({ author }) => {
   return <TaskAuthorLabel>{author} by web</TaskAuthorLabel>;
 };
 
-const Card = ({ cardState, title, content, author }) => {
+const Card = ({ cardState, cancelList, title, content, author }) => {
   return {
     default: <DefaultTask title={title} content={content} author={author} />,
-    active: <ActiveTask cardState={cardState} />,
+    active: <ActiveTask cardState={cardState} cancelList={cancelList} />,
   }[cardState];
 };
 
@@ -105,6 +109,11 @@ const ButtonArea = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+`;
+
+const ButtonBox = styled.div`
+  width: fit-content;
+  height: fit-content;
 `;
 
 const TitleBox = styled.div`
