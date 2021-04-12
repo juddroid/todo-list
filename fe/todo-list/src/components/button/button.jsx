@@ -9,19 +9,19 @@ const DeleteButton = ({ name }) => {
   return <NormalButton>{name}</NormalButton>;
 };
 
-const SubmitButton = ({ name }) => {
-  return <AccentButton>{name}</AccentButton>;
+const SubmitButton = ({ name, active }) => {
+  return <AccentButton active={active}>{name}</AccentButton>;
 };
 
 const EditButton = ({ name }) => {
   return <AccentButton>{name}</AccentButton>;
 };
 
-const Button = ({ type, name }) => {
+const Button = ({ type, name, active }) => {
   return {
     cancel: <CancelButton name={name} />,
     delete: <DeleteButton name={name} />,
-    submit: <SubmitButton name={name} />,
+    submit: <SubmitButton name={name} active={active} />,
     edit: <EditButton name={name} />,
   }[type];
 };
@@ -31,7 +31,7 @@ export default Button;
 const NormalButton = styled.button`
   align-items: flex-start;
   padding: 10px;
-  width: 125px;
+  width: 120px;
   height: 40px;
   background: #e0e0e0;
   color: #828282;
@@ -50,7 +50,7 @@ const NormalButton = styled.button`
 const AccentButton = styled.button`
   align-items: flex-start;
   padding: 10px;
-  width: 134px;
+  width: 120px;
   height: 40px;
   background: #0075de;
   color: #fff;

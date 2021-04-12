@@ -30,7 +30,7 @@ const ActiveTask = ({ type }) => {
         </TextArea>
         <ButtonArea>
           <Button type="cancel" name="취소" />
-          <Button type="submit" name="등록" />
+          <Button type="submit" name="등록" active={type} />
         </ButtonArea>
       </TaskBox>
     </TaskWrapper>

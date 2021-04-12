@@ -11,8 +11,12 @@ const ColumnHeader = ({ title, list }) => {
         <TaskCardCount list={list} />
       </ColumnTitleBox>
       <ColumnButtonBox>
-        <Icon type="add" />
-        <Icon type="delete" />
+        <IconBox onClick={() => console.log('add')}>
+          <Icon type="add" />
+        </IconBox>
+        <IconBox onClick={() => console.log('delete')}>
+          <Icon type="delete" />
+        </IconBox>
       </ColumnButtonBox>
     </ColumnHeaderContainer>
   );
@@ -42,4 +46,12 @@ const ColumnTitle = styled.span`
 
 const ColumnButtonBox = styled.div`
   display: flex;
+`;
+
+const IconBox = styled.div`
+  width: fit-content;
+  height: fit-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;

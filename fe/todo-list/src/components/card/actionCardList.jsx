@@ -9,20 +9,21 @@ const ActionCardList = ({ state, setState }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
+  const fetchData = async () => {
+    try {
+      setData(null);
+      setError(null);
+      setLoading(true);
+      const request = `/api/logs`;
+      const response = await axios.get(request);
+      setData(response.data);
+    } catch (error) {
+      setError(error);
+    }
+    setLoading(false);
+  };
+
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setData(null);
-        setError(null);
-        setLoading(true);
-        const request = `/api/logs`;
-        const response = await axios.get(request);
-        setData(response.data);
-      } catch (error) {
-        setError(error);
-      }
-      setLoading(false);
-    };
     fetchData();
   }, []);
 
