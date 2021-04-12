@@ -9,8 +9,8 @@ const DeleteButton = ({ name }) => {
   return <NormalButton>{name}</NormalButton>;
 };
 
-const SubmitButton = ({ name, active }) => {
-  const buttonState = active === 'deactivate' ? true : false;
+const SubmitButton = ({ name, cardState }) => {
+  const buttonState = cardState === 'active' ? true : false;
   return <AccentButton disabled={buttonState}>{name}</AccentButton>;
 };
 
@@ -18,11 +18,11 @@ const EditButton = ({ name }) => {
   return <AccentButton>{name}</AccentButton>;
 };
 
-const Button = ({ type, name, active }) => {
+const Button = ({ type, cardState, name }) => {
   return {
     cancel: <CancelButton name={name} />,
     delete: <DeleteButton name={name} />,
-    submit: <SubmitButton name={name} active={active} />,
+    submit: <SubmitButton name={name} cardState={cardState} />,
     edit: <EditButton name={name} />,
   }[type];
 };

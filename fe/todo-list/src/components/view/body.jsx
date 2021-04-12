@@ -34,6 +34,7 @@ const Body = () => {
       {data.map(({ columnTitle, id, taskList }) => (
         <Column title={columnTitle} key={id} taskList={taskList} />
       ))}
+      <Column title={'Done'} key={'Autumn'} taskList={data[0].taskList} />
     </BodyContainer>
   );
 };

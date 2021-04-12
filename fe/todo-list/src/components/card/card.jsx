@@ -1,11 +1,11 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import Button from '../button/button';
 import Icon from '../icon/icon';
 
 const DefaultTask = ({ title, content, author }) => {
   return (
-    <TaskWrapper>
+    <TaskWrapper draggable={true}>
       <IconPosition>
         <Icon type="delete" />
       </IconPosition>
@@ -20,7 +20,7 @@ const DefaultTask = ({ title, content, author }) => {
   );
 };
 
-const ActiveTask = ({ type }) => {
+const ActiveTask = ({ cardState }) => {
   return (
     <TaskWrapper>
       <TaskBox>
@@ -34,7 +34,7 @@ const ActiveTask = ({ type }) => {
         </TextArea>
         <ButtonArea>
           <Button type="cancel" name="취소" />
-          <Button type="submit" name="등록" active={type} />
+          <Button type="submit" name="등록" cardState={cardState} />
         </ButtonArea>
       </TaskBox>
     </TaskWrapper>
@@ -69,18 +69,27 @@ const Caption = ({ author }) => {
   return <TaskAuthorLabel>{author} by web</TaskAuthorLabel>;
 };
 
-const Card = ({ type, title, content, author }) => {
+const Card = ({ cardState, title, content, author }) => {
   return {
     default: <DefaultTask title={title} content={content} author={author} />,
-    active: <ActiveTask type={type} />,
-    deactivate: <ActiveTask type={type} />,
-  }[type];
+    active: <ActiveTask cardState={cardState} />,
+  }[cardState];
 };
 
 export default Card;
 
+const WrapperFade = keyframes`
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+`;
+
 const TaskWrapper = styled.div`
   position: relative;
+  animation: ${WrapperFade} 0.4s ease-in-out;
 
   & + div {
     margin-top: 20px;
@@ -167,7 +176,7 @@ const DefaultTaskInputStyle = styled.input`
   font-weight: bold;
   line-height: 23px;
   padding: 8px;
-  color: #9d9d9d;
+  color: #222;
   :focus {
     outline: none;
     box-shadow: 0px 0px 2px #828282;
@@ -180,8 +189,22 @@ const TaskTitleInput = styled(DefaultTaskInputStyle)`
   font-size: 16px;
 `;
 
-const TaskContentsInput = styled(DefaultTaskInputStyle)`
-  margin-bottom: 10px;
+const TaskContentsInput = styled.textarea`
   font-size: 14px;
   height: 100%;
+  min-height: 50px;
+  max-height: 150px;
+  width: 100%;
+  outline: none;
+  border: none;
+  font-weight: bold;
+  line-height: 23px;
+  padding: 8px;
+  color: #222;
+  resize: vertical;
+  :focus {
+    outline: none;
+    box-shadow: 0px 0px 2px #828282;
+    border-radius: 5px;
+  }
 `;

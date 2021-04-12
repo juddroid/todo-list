@@ -3,7 +3,7 @@ import Icon from '../icon/icon';
 import styled from 'styled-components';
 import TaskCardCount from '../card/taskCardCount';
 
-const ColumnHeader = ({ title, list }) => {
+const ColumnHeader = ({ title, list, changeList }) => {
   return (
     <ColumnHeaderContainer>
       <ColumnTitleBox>
@@ -11,7 +11,7 @@ const ColumnHeader = ({ title, list }) => {
         <TaskCardCount list={list} />
       </ColumnTitleBox>
       <ColumnButtonBox>
-        <IconBox onClick={() => console.log('add')}>
+        <IconBox onClick={changeList}>
           <Icon type="add" />
         </IconBox>
         <IconBox onClick={() => console.log('delete')}>
