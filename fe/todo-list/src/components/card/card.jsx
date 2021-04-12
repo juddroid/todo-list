@@ -25,8 +25,8 @@ const ActiveTask = ({ type }) => {
     <TaskWrapper>
       <TaskBox>
         <TextArea>
-          <TaskTitle type={type} />
-          <TaskContents type={type} />
+          <TaskTitleForm />
+          <TaskContentsForm />
         </TextArea>
         <ButtonArea>
           <Button type="cancel" name="취소" />
@@ -34,6 +34,26 @@ const ActiveTask = ({ type }) => {
         </ButtonArea>
       </TaskBox>
     </TaskWrapper>
+  );
+};
+
+const TaskTitleForm = () => {
+  return (
+    <TitleBox>
+      <TaskForm>
+        <TaskTitleInput placeholder="제목을 입력하세요." />
+      </TaskForm>
+    </TitleBox>
+  );
+};
+
+const TaskContentsForm = () => {
+  return (
+    <TitleBox>
+      <TaskForm>
+        <TaskContentsInput placeholder="내용을 입력하세요." />
+      </TaskForm>
+    </TitleBox>
   );
 };
 
@@ -102,6 +122,7 @@ const TaskTitleSpan = styled.span`
   font-size: 16px;
   font-weight: bold;
   line-height: 23px;
+
   color: ${(props) => (props.type === 'deactivate' ? '#828282' : '#010101')};
   margin: 8px 0px;
 `;
@@ -135,4 +156,33 @@ const TaskBox = styled.div`
     background: #ffeeec;
     border: 1px solid #ff4343;
   }
+`;
+
+const TaskForm = styled.form`
+  width: 100%;
+`;
+
+const DefaultTaskInputStyle = styled.input`
+  width: 100%;
+  outline: none;
+  border: none;
+  font-weight: bold;
+  line-height: 23px;
+  padding: 8px;
+  color: #9d9d9d;
+  :focus {
+    outline: none;
+    box-shadow: 0px 0px 2px #828282;
+    border-radius: 5px;
+  }
+`;
+
+const TaskTitleInput = styled(DefaultTaskInputStyle)`
+  margin: 4px 0px;
+  font-size: 16px;
+`;
+
+const TaskContentsInput = styled(DefaultTaskInputStyle)`
+  margin-bottom: 10px;
+  font-size: 14px;
 `;
