@@ -2,13 +2,12 @@ import React from 'react';
 import styled from 'styled-components';
 import Column from './column';
 
-const ColumnList = props => {
+const ColumnList = ({ data }) => {
   return (
     <ColumnWrapper>
-      <Column />
-      <Column />
-      <Column />
-      <Column />
+      {data.map(({ id, columnTitle, taskList }) => (
+        <Column key={id} columnTitle={columnTitle} taskList={taskList} />
+      ))}
     </ColumnWrapper>
   );
 };

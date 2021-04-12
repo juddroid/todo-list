@@ -3,12 +3,12 @@ import TaskCardCount from '../taskCardCount/taskCardCount';
 import Icon from '../icon/icon';
 import styled from 'styled-components';
 
-const ColumnHeader = props => {
+const ColumnHeader = ({ columnTitle, taskList }) => {
   return (
     <ColumnHeaderContainer>
       <ColumnTitleBox>
-        <ColumnTitle>제목</ColumnTitle>
-        <TaskCardCount />
+        <ColumnTitle>{columnTitle}</ColumnTitle>
+        <TaskCardCount taskList={taskList} />
       </ColumnTitleBox>
       <ColumnButtonBox>
         <Icon type="add" />

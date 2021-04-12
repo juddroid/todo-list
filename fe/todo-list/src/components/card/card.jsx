@@ -3,16 +3,16 @@ import styled from 'styled-components';
 import Button from '../button/button';
 import Icon from '../icon/icon';
 
-const DefaultTask = () => {
+const DefaultTask = ({ taskTitle, taskContent, authorName }) => {
   return (
     <TaskBox>
       <IconPosition>
         <Icon type="delete" />
       </IconPosition>
       <TextArea>
-        <TaskTitle />
-        <TaskContents />
-        <Caption />
+        <TaskTitle taskTitle={taskTitle} />
+        <TaskContents taskContent={taskContent} />
+        <Caption authorName={authorName} />
       </TextArea>
     </TaskBox>
   );
@@ -33,33 +33,39 @@ const ActiveTask = ({ type }) => {
   );
 };
 
-const TaskTitle = ({ type }) => {
+const TaskTitle = ({ type, taskTitle }) => {
   return (
     <TitleBox>
-      <TaskTitleSpan type={type}>Title</TaskTitleSpan>
+      <TaskTitleSpan type={type}>{taskTitle}</TaskTitleSpan>
     </TitleBox>
   );
 };
 
-const TaskContents = ({ type }) => {
+const TaskContents = ({ type, taskContent }) => {
   return (
     <ContentsBox>
-      <TaskContentsSpan type={type}>Body</TaskContentsSpan>
+      <TaskContentsSpan type={type}>{taskContent}</TaskContentsSpan>
     </ContentsBox>
   );
 };
 
-const Caption = () => {
+const Caption = ({ authorName }) => {
   return (
     <>
-      <TaskAuthorLabel>author by web</TaskAuthorLabel>
+      <TaskAuthorLabel>{authorName} by web</TaskAuthorLabel>
     </>
   );
 };
 
-const Card = ({ type }) => {
+const Card = ({ type, taskTitle, taskContent, authorName }) => {
   return {
-    default: <DefaultTask />,
+    default: (
+      <DefaultTask
+        taskTitle={taskTitle}
+        taskContent={taskContent}
+        authorName={authorName}
+      />
+    ),
     active: <ActiveTask type={type} />,
     deactivate: <ActiveTask type={type} />,
   }[type];
@@ -107,14 +113,14 @@ const TaskTitleSpan = styled.span`
   font-size: 16px;
   font-weight: bold;
   line-height: 23px;
-  color: ${(props) => (props.type === 'deactivate' ? '#828282' : '#010101')};
+  color: ${props => (props.type === 'deactivate' ? '#828282' : '#010101')};
   margin: 8px 0px;
 `;
 
 const TaskContentsSpan = styled.span`
   font-size: 14px;
   line-height: 20px;
-  color: ${(props) => (props.type === 'deactivate' ? '#828282' : '#010101')};
+  color: ${props => (props.type === 'deactivate' ? '#828282' : '#010101')};
 `;
 
 const TaskAuthorLabel = styled.span`

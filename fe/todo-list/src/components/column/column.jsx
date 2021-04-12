@@ -4,11 +4,11 @@ import styled from 'styled-components';
 import ColumnHeader from './columnHeader';
 import TaskCardList from '../taskCardList';
 
-const Column = () => {
+const Column = ({ columnTitle, taskList }) => {
   return (
     <ColumnContainer>
-      <ColumnHeader />
-      <TaskCardList />
+      <ColumnHeader columnTitle={columnTitle} taskList={taskList} />
+      <TaskCardList taskList={taskList} />
     </ColumnContainer>
   );
 };
