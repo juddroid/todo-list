@@ -10,7 +10,8 @@ const DeleteButton = ({ name }) => {
 };
 
 const SubmitButton = ({ name, active }) => {
-  return <AccentButton active={active}>{name}</AccentButton>;
+  const buttonState = active === 'deactivate' ? true : false;
+  return <AccentButton disabled={buttonState}>{name}</AccentButton>;
 };
 
 const EditButton = ({ name }) => {
@@ -64,7 +65,6 @@ const AccentButton = styled.button`
   &:hover {
     background: #00529b;
   }
-
   &:disabled {
     background: #86c6ff;
     cursor: default;
