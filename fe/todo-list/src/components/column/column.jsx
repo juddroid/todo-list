@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
+import ColumnHeader from './columnHeader';
 import TaskCardList from '../card/taskCardList';
-import ColumnHeader from '../column/columnHeader';
 
 const Column = ({ title, taskList }) => {
   return (

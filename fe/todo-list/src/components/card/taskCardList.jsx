@@ -4,14 +4,14 @@ import Card from './card';
 const TaskCardList = ({ list }) => {
   return (
     <>
-      {list.map((el) => (
-        <Card type="default" key={el.id} title={el.taskTitle} content={el.taskContent} author={el.authorName} />
+      {list.map(({ id, taskTitle, taskContent, authorName }) => (
+        <Card type="default" key={id} title={taskTitle} content={taskContent} author={authorName} />
       ))}
-      <Card type="default" />
+
       <Card type="active" />
       <Card type="deactivate" />
     </>
   );
 };
- 
+
 export default TaskCardList;

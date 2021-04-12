@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import Column from './column';
+import Column from '../column/column';
 
 const Body = () => {
   const [data, setData] = useState(null);

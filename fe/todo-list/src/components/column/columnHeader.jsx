@@ -1,7 +1,7 @@
 import React from 'react';
-import TaskCardCount from '../taskCardCount/taskCardCount';
 import Icon from '../icon/icon';
 import styled from 'styled-components';
+import TaskCardCount from '../card/taskCardCount';
 
 const ColumnHeader = ({ title, list }) => {
   return (
