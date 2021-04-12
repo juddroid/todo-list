@@ -31,8 +31,8 @@ const Body = () => {
 
   return (
     <BodyContainer>
-      {data.map((el) => (
-        <Column title={el.columnTitle} key={el.id} taskList={el.taskList} />
+      {data.map(({ columnTitle, id, taskList }) => (
+        <Column title={columnTitle} key={id} taskList={taskList} />
       ))}
     </BodyContainer>
   );
