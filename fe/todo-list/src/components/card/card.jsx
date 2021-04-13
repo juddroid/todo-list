@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import styled, { keyframes } from 'styled-components';
 import Button from '../button/button';
@@ -40,6 +41,13 @@ const ActiveTask = ({ cardState, cancelList }) => {
   const changeButtonState = (title, contents) => {
     if (title === '' && contents === '') return setButtonState(STATE_DISABLED);
     return setButtonState(STATE_ACTIVE);
+  };
+
+  const usePostData = () => {
+    axios.post('/user/12345', {
+      title: title,
+      contents: contents,
+    });
   };
 
   useEffect(() => {
