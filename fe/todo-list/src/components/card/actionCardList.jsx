@@ -16,7 +16,8 @@ const ActionCardList = ({ state, setState }) => {
       setLoading(true);
       const request = `/api/logs`;
       const response = await axios.get(request);
-      setData(response.data);
+
+      setData(response.data.todoLogs);
     } catch (error) {
       setError(error);
     }
@@ -41,9 +42,6 @@ const ActionCardList = ({ state, setState }) => {
         {data.map((el) => (
           <ActionCard key={el.id} data={el} />
         ))}
-        <ActionCard key="autumn" data={data[0]} />
-        <ActionCard key="nas" data={data[1]} />
-        <ActionCard key="jung" data={data[1]} />
       </ActionCardListBox>
     </ActionCardContainer>
   );
@@ -52,7 +50,6 @@ const ActionCardList = ({ state, setState }) => {
 export default ActionCardList;
 
 const ActionCardContainer = styled.div`
-  /* display: ${(props) => (props.state === 'flex' ? 'flex' : 'none')}; */
   position: absolute;
   flex-direction: column;
   align-items: flex-start;

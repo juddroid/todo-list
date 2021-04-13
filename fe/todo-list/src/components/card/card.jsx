@@ -79,7 +79,7 @@ const ActiveTask = ({ cardState, cancelList }) => {
 };
 
 const TaskTitleForm = ({ name, value, onChange }) => {
-  return <TaskTitleInput name={name} value={value} onChange={onChange} placeholder="제목을 입력하세요" autoFocus />;
+  return <TaskTitleInput name={name} value={value} onChange={onChange} placeholder="제목을 입력하세요" autoFocus autoComplete="off" />;
 };
 
 const TaskContentsForm = ({ name, value, onChange }) => {

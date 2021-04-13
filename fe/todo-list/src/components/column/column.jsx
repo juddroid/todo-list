@@ -9,7 +9,9 @@ const Column = ({ title, taskList }) => {
 
   const changeList = (e) => {
     e.preventDefault();
-    setCardState(STATE_ACTIVE);
+    return cardState === STATE_ACTIVE
+      ? setCardState(null)
+      : setCardState(STATE_ACTIVE);
   };
 
   const cancelList = (e) => {
@@ -20,7 +22,11 @@ const Column = ({ title, taskList }) => {
   return (
     <ColumnContainer>
       <ColumnHeader title={title} list={taskList} changeList={changeList} />
-      <TaskCardList list={taskList} cardState={cardState} cancelList={cancelList} />
+      <TaskCardList
+        list={taskList}
+        cardState={cardState}
+        cancelList={cancelList}
+      />
     </ColumnContainer>
   );
 };
