@@ -1,14 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-
 import ColumnHeader from './columnHeader';
 import TaskCardList from '../taskCardList';
+import { ACTIVE } from '../../const';
 
 const Column = ({ columnTitle, taskList }) => {
+  const [cardState, setCardState] = useState(null);
+
+  const changeState = (e) => {
+    e.preventDefault();
+    setCardState(ACTIVE);
+  };
+
   return (
     <ColumnContainer>
-      <ColumnHeader columnTitle={columnTitle} taskList={taskList} />
-      <TaskCardList taskList={taskList} />
+      <ColumnHeader columnTitle={columnTitle} taskList={taskList} changeState={changeState} />
+      <TaskCardList taskList={taskList} cardState={cardState} />
     </ColumnContainer>
   );
 };

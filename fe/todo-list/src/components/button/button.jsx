@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { DEFAULT } from '../../const';
 
 const CancelButton = ({ name }) => {
   return <NormalButton>{name}</NormalButton>;
@@ -9,19 +10,20 @@ const DeleteButton = ({ name }) => {
   return <NormalButton>{name}</NormalButton>;
 };
 
-const SubmitButton = ({ name }) => {
-  return <AccentButton>{name}</AccentButton>;
+const SubmitButton = ({ name, cardState }) => {
+  const state = cardState === DEFAULT ? false : true;
+  return <AccentButton disabled={state}>{name}</AccentButton>;
 };
 
 const EditButton = ({ name }) => {
   return <AccentButton>{name}</AccentButton>;
 };
 
-const Button = ({ type, name }) => {
+const Button = ({ type, name, cardState }) => {
   return {
     cancel: <CancelButton name={name} />,
     delete: <DeleteButton name={name} />,
-    submit: <SubmitButton name={name} />,
+    submit: <SubmitButton name={name} cardState={cardState} />,
     edit: <EditButton name={name} />,
   }[type];
 };

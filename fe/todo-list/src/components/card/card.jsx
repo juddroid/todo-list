@@ -18,16 +18,16 @@ const DefaultTask = ({ taskTitle, taskContent, authorName }) => {
   );
 };
 
-const ActiveTask = ({ type }) => {
+const ActiveTask = ({ cardState }) => {
   return (
     <TaskBox>
       <TextArea>
-        <TaskTitle type={type} />
-        <TaskContents type={type} />
+        <TaskTitleInput placeholder="제목을 입력하세요" />
+        <TaskContentsArea placeholder="내용을 입력하세요" />
       </TextArea>
       <ButtonArea>
         <Button type="cancel" name="취소" />
-        <Button type="submit" name="등록" />
+        <Button cardState={cardState} type="submit" name="등록" />
       </ButtonArea>
     </TaskBox>
   );
@@ -57,18 +57,11 @@ const Caption = ({ authorName }) => {
   );
 };
 
-const Card = ({ type, taskTitle, taskContent, authorName }) => {
+const Card = ({ cardState, taskTitle, taskContent, authorName }) => {
   return {
-    default: (
-      <DefaultTask
-        taskTitle={taskTitle}
-        taskContent={taskContent}
-        authorName={authorName}
-      />
-    ),
-    active: <ActiveTask type={type} />,
-    deactivate: <ActiveTask type={type} />,
-  }[type];
+    default: <DefaultTask taskTitle={taskTitle} taskContent={taskContent} authorName={authorName} />,
+    active: <ActiveTask cardState={cardState} />,
+  }[cardState];
 };
 
 export default Card;
@@ -113,14 +106,14 @@ const TaskTitleSpan = styled.span`
   font-size: 16px;
   font-weight: bold;
   line-height: 23px;
-  color: ${props => (props.type === 'deactivate' ? '#828282' : '#010101')};
+  color: ${(props) => (props.type === 'deactivate' ? '#828282' : '#010101')};
   margin: 8px 0px;
 `;
 
 const TaskContentsSpan = styled.span`
   font-size: 14px;
   line-height: 20px;
-  color: ${props => (props.type === 'deactivate' ? '#828282' : '#010101')};
+  color: ${(props) => (props.type === 'deactivate' ? '#828282' : '#010101')};
 `;
 
 const TaskAuthorLabel = styled.span`
@@ -134,4 +127,21 @@ const IconPosition = styled.div`
   position: absolute;
   top: 15px;
   right: 10px;
+`;
+
+const TaskTitleInput = styled.input`
+  width: 100%;
+  font-size: 16px;
+  line-height: 23px;
+  outline: none;
+  border: none;
+`;
+
+const TaskContentsArea = styled.textarea`
+  width: 100%;
+  min-height: 50px;
+  max-height: 150px;
+  resize: vertical;
+  outline: none;
+  border: none;
 `;
