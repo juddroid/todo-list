@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { ACTIVE, DEFAULT } from '../../const';
 import Button from '../button/button';
 import Icon from '../icon/icon';
 
@@ -19,15 +20,41 @@ const DefaultTask = ({ taskTitle, taskContent, authorName }) => {
 };
 
 const ActiveTask = ({ cardState }) => {
+  const [inputValue, setInputValue] = useState({
+    title: '',
+    contents: '',
+  });
+  const [buttonState, setButtonState] = useState(DEFAULT);
+  const { title, contents } = inputValue;
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setInputValue({
+      ...inputValue,
+      [name]: value,
+    });
+  };
+
+  const changeButtonState = (title, contents) => {
+    const isInputValueEmpty = (value) => value === '';
+    if (isInputValueEmpty(title) && isInputValueEmpty(contents)) {
+      return setButtonState(DEFAULT);
+    }
+    return setButtonState(ACTIVE);
+  };
+
+  useEffect(() => {
+    changeButtonState(title, contents);
+  }, [title, contents]);
+
   return (
     <TaskBox>
       <TextArea>
-        <TaskTitleInput placeholder="제목을 입력하세요" />
-        <TaskContentsArea placeholder="내용을 입력하세요" />
+        <TaskTitleInput name="title" value={title} onChange={handleInputChange} placeholder="제목을 입력하세요" autoComplete="off" />
+        <TaskContentsArea name="contents" value={contents} onChange={handleInputChange} placeholder="내용을 입력하세요" />
       </TextArea>
       <ButtonArea>
         <Button type="cancel" name="취소" />
-        <Button cardState={cardState} type="submit" name="등록" />
+        <Button buttonState={buttonState} cardState={cardState} type="submit" name="등록" />
       </ButtonArea>
     </TaskBox>
   );
