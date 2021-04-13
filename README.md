@@ -22,7 +22,7 @@
 
 ### 백엔드 API 설계
 
-* [링크](https://github.com/Malloc72P/todo-list/tree/team-12-back/be)
+* [링크](https://github.com/Malloc72P/todo-list/tree/team-12-back-jdbc/be)
 
 ### 프론트 컴포넌트 설계
 
