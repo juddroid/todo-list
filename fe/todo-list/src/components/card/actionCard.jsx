@@ -10,25 +10,48 @@ const UserImage = () => {
   );
 };
 
-const UserName = ({ name }) => {
+const UserName = ({ authorName }) => {
   return (
     <UserNameBox>
-      <span>{name || '@Autumn'}</span>
+      <span>@{authorName || '@Autumn'}</span>
     </UserNameBox>
   );
 };
 
-const UserActionContents = ({ action }) => {
-  const actionContents = action.split("' '").map((el) => el.replace("'", ''));
-
-  const [actionType, contents, from, to] = actionContents;
-
-  return (
-    <UserActionContentsBox>
-      <span>{contents}</span> 을 <span>{from}</span> 에서
-      <span> {to}</span> 로 <span>{actionType}</span> 하였습니다.
-    </UserActionContentsBox>
-  );
+const UserActionContents = ({
+  action,
+  fromColumnTitle,
+  toColumnTitle,
+  taskTitle,
+}) => {
+  return {
+    add: (
+      <UserActionContentsBox>
+        <span>{taskTitle}</span>을(를) {/* */}
+        <span>{toColumnTitle}</span>에 {/* */}
+        <span>등록</span>하였습니다.
+      </UserActionContentsBox>
+    ),
+    update: (
+      <UserActionContentsBox>
+        <span>{taskTitle}</span>을(를) {/* */}
+        <span>변경</span>하였습니다.
+      </UserActionContentsBox>
+    ),
+    remove: (
+      <UserActionContentsBox>
+        <span>{taskTitle}</span>을(를) {/* */}
+        <span>삭제</span>하였습니다.
+      </UserActionContentsBox>
+    ),
+    move: (
+      <UserActionContentsBox>
+        <span>{taskTitle}</span>을(를) {/* */}
+        <span>{fromColumnTitle}</span>에서
+        <span> {toColumnTitle}</span>로 <span>이동</span>하였습니다.
+      </UserActionContentsBox>
+    ),
+  }[action];
 };
 
 const ActionTime = ({ time }) => {
@@ -63,12 +86,24 @@ const ActionTime = ({ time }) => {
 };
 
 const UserAction = ({ data }) => {
-  const { action, authorName, createdDateTime } = data;
+  const {
+    action,
+    authorName,
+    fromColumnTitle,
+    toColumnTitle,
+    taskTitle,
+    createdDateTime,
+  } = data;
 
   return (
     <UserActionBox>
-      <UserName name={authorName} />
-      <UserActionContents action={action} />
+      <UserName authorName={authorName} />
+      <UserActionContents
+        action={action}
+        fromColumnTitle={fromColumnTitle}
+        toColumnTitle={toColumnTitle}
+        taskTitle={taskTitle}
+      />
       <ActionTime time={createdDateTime} />
     </UserActionBox>
   );
@@ -85,14 +120,14 @@ const ActionCard = ({ data }) => {
 
 export default ActionCard;
 
-const ActionCardBox = styled.div`
+const ActionCardBox = styled.li`
   position: relative;
   display: flex;
   padding: 16px;
   width: 332px;
   background: #f5f5f5;
   border-radius: 10px;
-  & + div {
+  & + li {
     margin-top: 20px;
   }
 `;
