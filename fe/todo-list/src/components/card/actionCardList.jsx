@@ -40,7 +40,9 @@ const ActionCardList = ({ state, setState }) => {
         <Icon type={DELETE} />
       </IconPosition>
       <ActionCardListBox>
-        {data.map((el) => (
+        {data.map((
+          el // 이 data가 todoLogs 배열, el은 카드 객체 하나
+        ) => (
           <ActionCard key={el.id} data={el} />
         ))}
       </ActionCardListBox>

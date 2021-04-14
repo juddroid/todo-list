@@ -10,23 +10,25 @@ const UserImage = () => {
   );
 };
 
-const UserName = ({ name }) => {
+const UserName = ({ authorName }) => {
   return (
     <UserNameBox>
-      <span>{name || '@Autumn'}</span>
+      <span>{authorName || '@Autumn'}</span>
     </UserNameBox>
   );
 };
 
-const UserActionContents = ({ action }) => {
-  const actionContents = action.split("' '").map((el) => el.replace("'", ''));
-
-  const [actionType, contents, from, to] = actionContents;
-
+const UserActionContents = ({
+  action,
+  fromColumnTitle,
+  toColumnTitle,
+  taskTitle,
+}) => {
   return (
     <UserActionContentsBox>
-      <span>{contents}</span> 을 <span>{from}</span> 에서
-      <span> {to}</span> 로 <span>{actionType}</span> 하였습니다.
+      <span>{taskTitle}</span> 을 {/* */}
+      <span>{fromColumnTitle || '디폴트컬럼'}</span> 에서
+      <span> {toColumnTitle}</span> 로 <span>{action}</span> 하였습니다.
     </UserActionContentsBox>
   );
 };
@@ -63,12 +65,24 @@ const ActionTime = ({ time }) => {
 };
 
 const UserAction = ({ data }) => {
-  const { action, authorName, createdDateTime } = data;
+  const {
+    action,
+    authorName,
+    fromColumnTitle,
+    toColumnTitle,
+    taskTitle,
+    createdDateTime,
+  } = data;
 
   return (
     <UserActionBox>
-      <UserName name={authorName} />
-      <UserActionContents action={action} />
+      <UserName authorName={authorName} />
+      <UserActionContents
+        action={action}
+        fromColumnTitle={fromColumnTitle}
+        toColumnTitle={toColumnTitle}
+        taskTitle={taskTitle}
+      />
       <ActionTime time={createdDateTime} />
     </UserActionBox>
   );
