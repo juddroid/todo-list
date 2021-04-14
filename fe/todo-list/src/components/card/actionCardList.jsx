@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { DELETE } from '../const';
+import { DELETE, REQUEST_URL } from '../const';
 import Icon from '../icon/icon';
 import ActionCard from './actionCard';
 
@@ -15,7 +15,7 @@ const ActionCardList = ({ state, setState }) => {
       setData(null);
       setError(null);
       setLoading(true);
-      const request = `http://13.209.60.60:8080/api/logs`;
+      const request = `${REQUEST_URL}/api/logs`;
       const response = await axios.get(request);
 
       setData(response.data.todoLogs);

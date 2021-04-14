@@ -1,10 +1,9 @@
-import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import styled, { keyframes } from 'styled-components';
 import Button from '../button/button';
 import { ACTIVE, BLOCK, DELETE, DISABLED, NONE } from '../const';
 import Icon from '../icon/icon';
-import qs from 'qs';
+import { postData } from '../postData';
 
 const DefaultTask = ({
   title,
@@ -31,7 +30,7 @@ const DefaultTask = ({
   );
 };
 
-const ActiveTask = ({ closeActiveTask, display }) => {
+const ActiveTask = ({ closeActiveTask, display, columnID }) => {
   const [inputValue, setInputValue] = useState({
     title: '',
     contents: '',
@@ -54,16 +53,12 @@ const ActiveTask = ({ closeActiveTask, display }) => {
     return setButtonState(ACTIVE);
   };
 
-  const usePostData = async () => {
-    const data = { taskTitle: title, taskContent: contents };
-    const options = {
-      method: 'POST',
-      headers: { 'content-type': 'application/x-www-form-urlencoded' },
-      data: qs.stringify(data),
-      url: '/api/columns/2/tasks',
-    };
-    await axios(options);
-  };
+  const [reloading, setReloading] = useState(false);
+
+  useEffect(() => {
+    console.log('reloading');
+  }, [reloading]);
+
   useEffect(() => {
     if (localVisible === BLOCK && display === NONE) {
       console.log('here', display);
@@ -78,7 +73,7 @@ const ActiveTask = ({ closeActiveTask, display }) => {
   }, [title, contents]);
 
   if (localVisible === NONE && !animate) return null;
-
+  console.log(title, contents, columnID);
   return (
     <TaskWrapper display={display}>
       <TaskBox>
@@ -102,7 +97,9 @@ const ActiveTask = ({ closeActiveTask, display }) => {
           <ButtonBox onClick={closeActiveTask}>
             <Button type="cancel" name="취소" />
           </ButtonBox>
-          <ButtonBox onClick={usePostData}>
+          <ButtonBox
+            onClick={() => postData(title, contents, columnID, setReloading)}
+          >
             <Button type="submit" name="등록" buttonState={buttonState} />
           </ButtonBox>
         </ButtonArea>
@@ -165,6 +162,7 @@ const Card = ({
   taskID,
   columnID,
   deleteData,
+  postData,
 }) => {
   return {
     default: (
@@ -178,7 +176,14 @@ const Card = ({
         deleteData={deleteData}
       />
     ),
-    active: <ActiveTask closeActiveTask={closeActiveTask} display={display} />,
+    active: (
+      <ActiveTask
+        closeActiveTask={closeActiveTask}
+        display={display}
+        postData={postData}
+        columnID={columnID}
+      />
+    ),
   }[cardStyle];
 };
 
@@ -204,7 +209,6 @@ const FadeOut = keyframes`
 const TaskWrapper = styled.div`
   position: relative;
   animation: ${({ display }) => {
-      console.log(display);
       if (display === NONE) {
         console.log('there');
         return FadeOut;
@@ -213,7 +217,7 @@ const TaskWrapper = styled.div`
         return FadeIn;
       }
     }}
-    1s ease-in-out;
+    0.4s ease-in-out;
 
   display: ${({ display }) => display};
   margin-top: 20px;

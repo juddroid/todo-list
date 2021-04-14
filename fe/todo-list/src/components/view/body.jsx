@@ -1,7 +1,9 @@
 import axios from 'axios';
+import qs from 'qs';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Column from '../column/column';
+import { REQUEST_URL } from '../const';
 
 const Body = () => {
   const [data, setData] = useState(null);
@@ -14,9 +16,11 @@ const Body = () => {
       setData(null);
       setError(null);
       setLoading(true);
-      const request = `http://13.209.60.60:8080/api/columns`;
+      const request = `${REQUEST_URL}/api/columns`;
       const response = await axios.get(request);
-      setData(response.data.columns);
+      const apiData = response.data.columns;
+
+      setData(apiData);
     } catch (error) {
       setError(error);
     }
@@ -25,10 +29,22 @@ const Body = () => {
 
   const deleteData = async (columnID, taskID) => {
     await axios.delete(
-      `http://13.209.60.60:8080/api/columns/${columnID}/tasks/${taskID}`
+      `${REQUEST_URL}/api/columns/${columnID}/tasks/${taskID}`
     );
     setReloading(true);
   };
+
+  // const postData = async (title, contents, columnID) => {
+  //   const data = { taskTitle: title, taskContent: contents };
+  //   const options = {
+  //     method: 'POST',
+  //     headers: { 'content-type': 'application/x-www-form-urlencoded' },
+  //     data: qs.stringify(data),
+  //     url: `${REQUEST_URL}/api/columns/${columnID}/tasks`,
+  //   };
+  //   await axios(options);
+  //   setReloading(true);
+  // };
 
   useEffect(() => {
     fetchData();
@@ -48,6 +64,7 @@ const Body = () => {
           taskList={taskList}
           columnID={id}
           deleteData={deleteData}
+          // postData={postData}
         />
       ))}
     </BodyContainer>
