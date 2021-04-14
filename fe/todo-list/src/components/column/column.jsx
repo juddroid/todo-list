@@ -1,29 +1,45 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import ColumnHeader from './columnHeader';
-import TaskCardList from '../taskCardList';
-import { ACTIVE } from '../../const';
+import TaskCardList from '../card/taskCardList';
+import { BLOCK, NONE } from '../const';
 
-const Column = ({ columnTitle, taskList }) => {
-  const [cardState, setCardState] = useState(null);
+const Column = ({ title, taskList, columnID, deleteData }) => {
+  const [display, setDisplay] = useState(NONE);
 
-  const changeState = (e) => {
+  const toggleDisplay = (e) => {
     e.preventDefault();
-    setCardState(ACTIVE);
+    if (display === NONE) return setDisplay(BLOCK);
+    return setDisplay(NONE);
+  };
+
+  const closeActiveTask = (e) => {
+    e.preventDefault();
+    setDisplay(NONE);
   };
 
   return (
     <ColumnContainer>
-      <ColumnHeader columnTitle={columnTitle} taskList={taskList} changeState={changeState} />
-      <TaskCardList taskList={taskList} cardState={cardState} />
+      <ColumnHeader
+        title={title}
+        list={taskList}
+        toggleDisplay={toggleDisplay}
+        closeActiveTask={closeActiveTask}
+      />
+      <TaskCardList
+        list={taskList}
+        closeActiveTask={closeActiveTask}
+        display={display}
+        columnID={columnID}
+        deleteData={deleteData}
+      />
     </ColumnContainer>
   );
 };
+
 export default Column;
 
 const ColumnContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 320px;
-  margin: 10px;
+  padding: 10px;
+  width: 300px;
 `;
