@@ -13,7 +13,7 @@ const UserImage = () => {
 const UserName = ({ authorName }) => {
   return (
     <UserNameBox>
-      <span>{authorName || '@Autumn'}</span>
+      <span>@{authorName || '@Autumn'}</span>
     </UserNameBox>
   );
 };
@@ -24,13 +24,34 @@ const UserActionContents = ({
   toColumnTitle,
   taskTitle,
 }) => {
-  return (
-    <UserActionContentsBox>
-      <span>{taskTitle}</span> 을 {/* */}
-      <span>{fromColumnTitle || '디폴트컬럼'}</span> 에서
-      <span> {toColumnTitle}</span> 로 <span>{action}</span> 하였습니다.
-    </UserActionContentsBox>
-  );
+  return {
+    add: (
+      <UserActionContentsBox>
+        <span>{taskTitle}</span>을(를) {/* */}
+        <span>{toColumnTitle}</span>에 {/* */}
+        <span>등록</span>하였습니다.
+      </UserActionContentsBox>
+    ),
+    update: (
+      <UserActionContentsBox>
+        <span>{taskTitle}</span>을(를) {/* */}
+        <span>변경</span>하였습니다.
+      </UserActionContentsBox>
+    ),
+    remove: (
+      <UserActionContentsBox>
+        <span>{taskTitle}</span>을(를) {/* */}
+        <span>삭제</span>하였습니다.
+      </UserActionContentsBox>
+    ),
+    move: (
+      <UserActionContentsBox>
+        <span>{taskTitle}</span>을(를) {/* */}
+        <span>{fromColumnTitle}</span>에서
+        <span> {toColumnTitle}</span>로 <span>이동</span>하였습니다.
+      </UserActionContentsBox>
+    ),
+  }[action];
 };
 
 const ActionTime = ({ time }) => {
