@@ -39,7 +39,6 @@ const IconButton = styled.button`
   outline: none;
   cursor: pointer;
   font-size: 16px;
-
   &:hover {
     color: ${(props) => {
       return { add: '#0075DE', delete: '#FF4343' }[props.type] || '#505050';

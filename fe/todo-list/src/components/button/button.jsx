@@ -42,7 +42,6 @@ const NormalButton = styled.button`
   font-size: 14px;
   cursor: pointer;
   outline: none;
-
   &:hover {
     color: #ffffff;
     background-color: #828282;
@@ -62,7 +61,6 @@ const AccentButton = styled.button`
   font-size: 14px;
   cursor: pointer;
   outline: none;
-
   &:hover {
     background: #00529b;
   }

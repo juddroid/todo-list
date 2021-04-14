@@ -1,21 +1,22 @@
 import React from 'react';
-import TaskCardCount from '../taskCardCount/taskCardCount';
 import Icon from '../icon/icon';
 import styled from 'styled-components';
+import TaskCardCount from '../card/taskCardCount';
+import { ADD, DELETE } from '../const';
 
-const ColumnHeader = ({ columnTitle, taskList, changeState }) => {
+const ColumnHeader = ({ title, list, toggleDisplay, closeActiveTask }) => {
   return (
     <ColumnHeaderContainer>
       <ColumnTitleBox>
-        <ColumnTitle>{columnTitle}</ColumnTitle>
-        <TaskCardCount taskList={taskList} />
+        <ColumnTitle>{title}</ColumnTitle>
+        <TaskCardCount list={list} />
       </ColumnTitleBox>
       <ColumnButtonBox>
-        <IconBox onClick={changeState}>
-          <Icon type="add" />
+        <IconBox onClick={toggleDisplay}>
+          <Icon type={ADD} />
         </IconBox>
-        <IconBox>
-          <Icon type="delete" />
+        <IconBox onClick={closeActiveTask}>
+          <Icon type={DELETE} />
         </IconBox>
       </ColumnButtonBox>
     </ColumnHeaderContainer>
@@ -27,14 +28,14 @@ export default ColumnHeader;
 const ColumnHeaderContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  width: 300px;
-  padding: 0px 10px;
   margin-bottom: 10px;
+  align-items: center;
 `;
 
 const ColumnTitleBox = styled.div`
   display: flex;
   align-items: center;
+  padding: 0 10px;
 `;
 
 const ColumnTitle = styled.span`
@@ -46,11 +47,12 @@ const ColumnTitle = styled.span`
 
 const ColumnButtonBox = styled.div`
   display: flex;
-  justify-content: center;
-  align-items: center;
 `;
 
 const IconBox = styled.div`
   width: fit-content;
   height: fit-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;

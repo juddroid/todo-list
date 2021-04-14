@@ -92,7 +92,6 @@ const ActionCardBox = styled.div`
   width: 332px;
   background: #f5f5f5;
   border-radius: 10px;
-
   & + div {
     margin-top: 20px;
   }
@@ -105,7 +104,6 @@ const UserImageBox = styled.div`
   width: 40px;
   height: 40px;
   padding: 5px;
-
   & > svg {
     width: 100%;
     height: 100%;
@@ -125,7 +123,6 @@ const UserActionContentsBox = styled.div`
   line-height: 23px;
   color: #010101;
   margin: 4px 0px;
-
   & > span {
     font-weight: bold;
     font-size: 16px;
