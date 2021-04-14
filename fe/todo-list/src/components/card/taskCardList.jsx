@@ -1,5 +1,6 @@
-import React from 'react';
-import { ACTIVE, BLOCK, DEFAULT } from '../const';
+import axios from 'axios';
+import React, { useState } from 'react';
+import { ACTIVE, BLOCK, DEFAULT, REQUEST_URL } from '../const';
 import Card from './card';
 
 const TaskCardList = ({
@@ -7,10 +8,17 @@ const TaskCardList = ({
   closeActiveTask,
   display,
   columnID,
-  deleteData,
   postData,
 }) => {
-  console.log(list);
+  const [cardList, setCardList] = useState(list);
+
+  const deleteData = async (columnID, taskID) => {
+    await axios.delete(
+      `${REQUEST_URL}/api/columns/${columnID}/tasks/${taskID}`
+    );
+    setCardList(cardList.filter((card) => card.id !== taskID));
+  };
+
   return (
     <>
       <Card
@@ -20,7 +28,7 @@ const TaskCardList = ({
         postData={postData}
         columnID={columnID}
       />
-      {list.map(({ id, taskTitle, taskContent, authorName }) => (
+      {cardList.map(({ id, taskTitle, taskContent, authorName }) => (
         <Card
           key={id}
           cardStyle={DEFAULT}

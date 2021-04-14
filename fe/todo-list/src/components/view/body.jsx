@@ -9,42 +9,33 @@ const Body = () => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [reloading, setReloading] = useState(false);
 
   const fetchData = async () => {
     try {
-      setData(null);
       setError(null);
       setLoading(true);
       const request = `${REQUEST_URL}/api/columns`;
       const response = await axios.get(request);
       const apiData = response.data.columns;
-
       setData(apiData);
     } catch (error) {
       setError(error);
     }
     setLoading(false);
   };
+  const [reloading, setReloading] = useState(false);
 
-  const deleteData = async (columnID, taskID) => {
-    await axios.delete(
-      `${REQUEST_URL}/api/columns/${columnID}/tasks/${taskID}`
-    );
+  const postData = async (title, contents, columnID) => {
+    const data = { taskTitle: title || ' ', taskContent: contents || ' ' };
+    const options = {
+      method: 'POST',
+      headers: { 'content-type': 'application/x-www-form-urlencoded' },
+      data: qs.stringify(data),
+      url: `${REQUEST_URL}/api/columns/${columnID}/tasks`,
+    };
+    await axios(options);
     setReloading(true);
   };
-
-  // const postData = async (title, contents, columnID) => {
-  //   const data = { taskTitle: title, taskContent: contents };
-  //   const options = {
-  //     method: 'POST',
-  //     headers: { 'content-type': 'application/x-www-form-urlencoded' },
-  //     data: qs.stringify(data),
-  //     url: `${REQUEST_URL}/api/columns/${columnID}/tasks`,
-  //   };
-  //   await axios(options);
-  //   setReloading(true);
-  // };
 
   useEffect(() => {
     fetchData();
@@ -63,8 +54,7 @@ const Body = () => {
           key={id}
           taskList={taskList}
           columnID={id}
-          deleteData={deleteData}
-          // postData={postData}
+          postData={postData}
         />
       ))}
     </BodyContainer>

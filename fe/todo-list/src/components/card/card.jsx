@@ -3,7 +3,6 @@ import styled, { keyframes } from 'styled-components';
 import Button from '../button/button';
 import { ACTIVE, BLOCK, DELETE, DISABLED, NONE } from '../const';
 import Icon from '../icon/icon';
-import { postData } from '../postData';
 
 const DefaultTask = ({
   title,
@@ -30,7 +29,7 @@ const DefaultTask = ({
   );
 };
 
-const ActiveTask = ({ closeActiveTask, display, columnID }) => {
+const ActiveTask = ({ closeActiveTask, display, columnID, postData }) => {
   const [inputValue, setInputValue] = useState({
     title: '',
     contents: '',
@@ -52,12 +51,6 @@ const ActiveTask = ({ closeActiveTask, display, columnID }) => {
     if (title === '' && contents === '') return setButtonState(DISABLED);
     return setButtonState(ACTIVE);
   };
-
-  const [reloading, setReloading] = useState(false);
-
-  useEffect(() => {
-    console.log('reloading');
-  }, [reloading]);
 
   useEffect(() => {
     if (localVisible === BLOCK && display === NONE) {
@@ -97,9 +90,7 @@ const ActiveTask = ({ closeActiveTask, display, columnID }) => {
           <ButtonBox onClick={closeActiveTask}>
             <Button type="cancel" name="취소" />
           </ButtonBox>
-          <ButtonBox
-            onClick={() => postData(title, contents, columnID, setReloading)}
-          >
+          <ButtonBox onClick={() => postData(title, contents, columnID)}>
             <Button type="submit" name="등록" buttonState={buttonState} />
           </ButtonBox>
         </ButtonArea>
