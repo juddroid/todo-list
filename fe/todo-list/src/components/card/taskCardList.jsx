@@ -8,13 +8,17 @@ const TaskCardList = ({
   display,
   columnID,
   deleteData,
+  postData,
 }) => {
+  console.log(list);
   return (
     <>
       <Card
         cardStyle={ACTIVE}
         closeActiveTask={closeActiveTask}
         display={display}
+        postData={postData}
+        columnID={columnID}
       />
       {list.map(({ id, taskTitle, taskContent, authorName }) => (
         <Card
