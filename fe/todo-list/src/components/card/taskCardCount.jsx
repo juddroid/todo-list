@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const TaskCardCount = props => {
+const TaskCardCount = ({ list }) => {
   return (
     <CountBadge>
-      <CountNumber>10</CountNumber>
+      <CountNumber>{list.length}</CountNumber>
     </CountBadge>
   );
 };
