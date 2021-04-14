@@ -2,30 +2,36 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import ColumnHeader from './columnHeader';
 import TaskCardList from '../card/taskCardList';
-import { STATE_ACTIVE } from '../const';
+import { BLOCK, NONE } from '../const';
 
-const Column = ({ title, taskList }) => {
-  const [cardState, setCardState] = useState(null);
+const Column = ({ title, taskList, columnID, deleteData }) => {
+  const [display, setDisplay] = useState(NONE);
 
-  const changeList = (e) => {
+  const toggleDisplay = (e) => {
     e.preventDefault();
-    return cardState === STATE_ACTIVE
-      ? setCardState(null)
-      : setCardState(STATE_ACTIVE);
+    if (display === NONE) return setDisplay(BLOCK);
+    return setDisplay(NONE);
   };
 
-  const cancelList = (e) => {
+  const closeActiveTask = (e) => {
     e.preventDefault();
-    setCardState(null);
+    setDisplay(NONE);
   };
 
   return (
     <ColumnContainer>
-      <ColumnHeader title={title} list={taskList} changeList={changeList} />
+      <ColumnHeader
+        title={title}
+        list={taskList}
+        toggleDisplay={toggleDisplay}
+        closeActiveTask={closeActiveTask}
+      />
       <TaskCardList
         list={taskList}
-        cardState={cardState}
-        cancelList={cancelList}
+        closeActiveTask={closeActiveTask}
+        display={display}
+        columnID={columnID}
+        deleteData={deleteData}
       />
     </ColumnContainer>
   );

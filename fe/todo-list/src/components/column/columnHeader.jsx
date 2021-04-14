@@ -2,8 +2,9 @@ import React from 'react';
 import Icon from '../icon/icon';
 import styled from 'styled-components';
 import TaskCardCount from '../card/taskCardCount';
+import { ADD, DELETE } from '../const';
 
-const ColumnHeader = ({ title, list, changeList }) => {
+const ColumnHeader = ({ title, list, toggleDisplay, closeActiveTask }) => {
   return (
     <ColumnHeaderContainer>
       <ColumnTitleBox>
@@ -11,11 +12,11 @@ const ColumnHeader = ({ title, list, changeList }) => {
         <TaskCardCount list={list} />
       </ColumnTitleBox>
       <ColumnButtonBox>
-        <IconBox onClick={changeList}>
-          <Icon type="add" />
+        <IconBox onClick={toggleDisplay}>
+          <Icon type={ADD} />
         </IconBox>
-        <IconBox onClick={() => console.log('delete')}>
-          <Icon type="delete" />
+        <IconBox onClick={closeActiveTask}>
+          <Icon type={DELETE} />
         </IconBox>
       </ColumnButtonBox>
     </ColumnHeaderContainer>

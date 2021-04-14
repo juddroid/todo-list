@@ -1,4 +1,8 @@
 export const TITLE = `TO-DO LIST`;
-export const STATE_DEFAULT = 'default';
-export const STATE_DISABLED = 'disabled';
-export const STATE_ACTIVE = 'active';
+export const DEFAULT = 'default';
+export const DISABLED = 'disabled';
+export const ACTIVE = 'active';
+export const ADD = 'add';
+export const DELETE = 'delete';
+export const NONE = 'none';
+export const BLOCK = 'block';

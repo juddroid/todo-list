@@ -2,14 +2,23 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import styled, { keyframes } from 'styled-components';
 import Button from '../button/button';
-import { STATE_ACTIVE, STATE_DISABLED } from '../const';
+import { ACTIVE, BLOCK, DELETE, DISABLED, NONE } from '../const';
 import Icon from '../icon/icon';
+import qs from 'qs';
 
-const DefaultTask = ({ title, content, author }) => {
+const DefaultTask = ({
+  title,
+  content,
+  author,
+  display,
+  columnID,
+  taskID,
+  deleteData,
+}) => {
   return (
-    <TaskWrapper draggable={true}>
-      <IconPosition>
-        <Icon type="delete" />
+    <TaskWrapper display={display} draggable={true}>
+      <IconPosition onClick={() => deleteData(columnID, taskID)}>
+        <Icon type={DELETE} />
       </IconPosition>
       <TaskBox>
         <TextArea>
@@ -22,12 +31,14 @@ const DefaultTask = ({ title, content, author }) => {
   );
 };
 
-const ActiveTask = ({ cardState, cancelList }) => {
+const ActiveTask = ({ closeActiveTask, display }) => {
   const [inputValue, setInputValue] = useState({
     title: '',
     contents: '',
   });
-  const [buttonState, setButtonState] = useState(STATE_DISABLED);
+  const [buttonState, setButtonState] = useState(DISABLED);
+  const [animate, setAnimate] = useState(false);
+  const [localVisible, setLocalVisible] = useState(display);
 
   const { title, contents } = inputValue;
   const onChangeUserInput = (e) => {
@@ -39,38 +50,60 @@ const ActiveTask = ({ cardState, cancelList }) => {
   };
 
   const changeButtonState = (title, contents) => {
-    if (title === '' && contents === '') return setButtonState(STATE_DISABLED);
-    return setButtonState(STATE_ACTIVE);
+    if (title === '' && contents === '') return setButtonState(DISABLED);
+    return setButtonState(ACTIVE);
   };
 
-  const usePostData = () => {
-    axios.post('/user/12345', {
-      title: title,
-      contents: contents,
-    });
+  const usePostData = async () => {
+    const data = { taskTitle: title, taskContent: contents };
+    const options = {
+      method: 'POST',
+      headers: { 'content-type': 'application/x-www-form-urlencoded' },
+      data: qs.stringify(data),
+      url: '/api/columns/2/tasks',
+    };
+    await axios(options);
   };
+  useEffect(() => {
+    if (localVisible === BLOCK && display === NONE) {
+      console.log('here', display);
+      setAnimate(true);
+      setTimeout(() => setAnimate(false), 2000);
+    }
+    setLocalVisible(display);
+  }, [localVisible, display]);
 
   useEffect(() => {
     changeButtonState(title, contents);
   }, [title, contents]);
 
+  if (localVisible === NONE && !animate) return null;
+
   return (
-    <TaskWrapper>
+    <TaskWrapper display={display}>
       <TaskBox>
         <TextArea>
           <TitleBox>
             <TaskForm>
-              <TaskTitleForm name="title" value={title} onChange={onChangeUserInput} />
-              <TaskContentsForm name="contents" value={contents} onChange={onChangeUserInput} />
+              <TaskTitleForm
+                name="title"
+                value={title}
+                onChange={onChangeUserInput}
+              />
+              <TaskContentsForm
+                name="contents"
+                value={contents}
+                onChange={onChangeUserInput}
+              />
             </TaskForm>
           </TitleBox>
         </TextArea>
         <ButtonArea>
-          <ButtonBox onClick={cancelList}>
+          <ButtonBox onClick={closeActiveTask}>
             <Button type="cancel" name="취소" />
           </ButtonBox>
-          <ButtonBox onClick={() => console.log('submit')}>
-            <Button type="submit" name="등록" cardState={cardState} buttonState={buttonState} />
+          <ButtonBox onClick={usePostData}>
+            <Button type="submit" name="등록" buttonState={buttonState} />
           </ButtonBox>
         </ButtonArea>
       </TaskBox>
@@ -79,11 +112,27 @@ const ActiveTask = ({ cardState, cancelList }) => {
 };
 
 const TaskTitleForm = ({ name, value, onChange }) => {
-  return <TaskTitleInput name={name} value={value} onChange={onChange} placeholder="제목을 입력하세요" autoFocus autoComplete="off" />;
+  return (
+    <TaskTitleInput
+      name={name}
+      value={value}
+      onChange={onChange}
+      placeholder="제목을 입력하세요"
+      autoFocus
+      autoComplete="off"
+    />
+  );
 };
 
 const TaskContentsForm = ({ name, value, onChange }) => {
-  return <TaskContentsInput name={name} value={value} onChange={onChange} placeholder="내용을 입력하세요" />;
+  return (
+    <TaskContentsInput
+      name={name}
+      value={value}
+      onChange={onChange}
+      placeholder="내용을 입력하세요"
+    />
+  );
 };
 
 const TaskTitle = ({ type, title }) => {
@@ -106,27 +155,68 @@ const Caption = ({ author }) => {
   return <TaskAuthorLabel>{author} by web</TaskAuthorLabel>;
 };
 
-const Card = ({ cardState, cancelList, title, content, author }) => {
+const Card = ({
+  cardStyle,
+  closeActiveTask,
+  title,
+  content,
+  author,
+  display,
+  taskID,
+  columnID,
+  deleteData,
+}) => {
   return {
-    default: <DefaultTask title={title} content={content} author={author} />,
-    active: <ActiveTask cardState={cardState} cancelList={cancelList} />,
-  }[cardState];
+    default: (
+      <DefaultTask
+        title={title}
+        content={content}
+        author={author}
+        display={display}
+        taskID={taskID}
+        columnID={columnID}
+        deleteData={deleteData}
+      />
+    ),
+    active: <ActiveTask closeActiveTask={closeActiveTask} display={display} />,
+  }[cardStyle];
 };
 
 export default Card;
 
-const WrapperFade = keyframes`
-  0% {
+const FadeIn = keyframes`
+  from {
     opacity: 0;
   }
-  100% {
+  to {
     opacity: 1;
+  }
+`;
+const FadeOut = keyframes`
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
   }
 `;
 
 const TaskWrapper = styled.div`
   position: relative;
-  animation: ${WrapperFade} 0.4s ease-in-out;
+  animation: ${({ display }) => {
+      console.log(display);
+      if (display === NONE) {
+        console.log('there');
+        return FadeOut;
+      }
+      if (display === BLOCK) {
+        return FadeIn;
+      }
+    }}
+    1s ease-in-out;
+
+  display: ${({ display }) => display};
+  margin-top: 20px;
 
   & + div {
     margin-top: 20px;

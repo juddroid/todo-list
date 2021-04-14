@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { STATE_DISABLED } from '../const';
+import { DISABLED } from '../const';
 
 const CancelButton = ({ name }) => {
   return <NormalButton>{name}</NormalButton>;
@@ -11,7 +11,7 @@ const DeleteButton = ({ name }) => {
 };
 
 const SubmitButton = ({ name, buttonState }) => {
-  const state = buttonState === STATE_DISABLED ? true : false;
+  const state = buttonState === DISABLED ? true : false;
   return <AccentButton disabled={state}>{name}</AccentButton>;
 };
 
