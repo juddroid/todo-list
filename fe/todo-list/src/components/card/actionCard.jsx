@@ -99,14 +99,14 @@ const ActionCard = ({ data }) => {
 
 export default ActionCard;
 
-const ActionCardBox = styled.div`
+const ActionCardBox = styled.li`
   position: relative;
   display: flex;
   padding: 16px;
   width: 332px;
   background: #f5f5f5;
   border-radius: 10px;
-  & + div {
+  & + li {
     margin-top: 20px;
   }
 `;

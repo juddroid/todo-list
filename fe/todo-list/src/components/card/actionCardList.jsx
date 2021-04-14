@@ -82,7 +82,7 @@ const IconPosition = styled.div`
   margin-right: 5px;
 `;
 
-const ActionCardListBox = styled.div`
+const ActionCardListBox = styled.ul`
   display: flex;
   flex-direction: column;
 `;
