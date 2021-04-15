@@ -4,7 +4,14 @@ import ColumnHeader from './columnHeader';
 import TaskCardList from '../card/taskCardList';
 import { BLOCK, NONE } from '../const';
 
-const Column = ({ title, taskList, columnID, postData }) => {
+const Column = ({
+  title,
+  taskList,
+  columnID,
+  toggleDisplayState,
+  setDelColID,
+  setDelTasID,
+}) => {
   const [display, setDisplay] = useState(NONE);
 
   const toggleDisplay = (e) => {
@@ -30,7 +37,9 @@ const Column = ({ title, taskList, columnID, postData }) => {
         closeActiveTask={closeActiveTask}
         display={display}
         columnID={columnID}
-        postData={postData}
+        toggleDisplayState={toggleDisplayState}
+        setDelColID={setDelColID}
+        setDelTasID={setDelTasID}
       />
     </ColumnContainer>
   );

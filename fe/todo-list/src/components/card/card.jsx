@@ -1,7 +1,16 @@
+import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import styled, { keyframes } from 'styled-components';
 import Button from '../button/button';
-import { ACTIVE, BLOCK, DELETE, DISABLED, NONE } from '../const';
+import {
+  ACTIVE,
+  BLOCK,
+  CANCEL,
+  DELETE,
+  DISABLED,
+  NONE,
+  REQUEST_URL,
+} from '../const';
 import Icon from '../icon/icon';
 
 const DefaultTask = ({
@@ -11,11 +20,17 @@ const DefaultTask = ({
   display,
   columnID,
   taskID,
-  deleteData,
+  toggleDisplayState,
+  setDelColID,
+  setDelTasID,
 }) => {
   return (
     <TaskWrapper display={display} draggable={true}>
-      <IconPosition onClick={() => deleteData(columnID, taskID)}>
+      <IconPosition
+        onClick={() =>
+          toggleDisplayState(columnID, taskID, setDelColID, setDelTasID)
+        }
+      >
         <Icon type={DELETE} />
       </IconPosition>
       <TaskBox>
@@ -26,6 +41,44 @@ const DefaultTask = ({
         </TextArea>
       </TaskBox>
     </TaskWrapper>
+  );
+};
+
+const CancelPopup = ({
+  display,
+  toggleDisplayState,
+  delColID,
+  delTasID,
+  cardList,
+  setCardList,
+}) => {
+  console.log(cardList);
+  const deleteData = async (columnID, taskID) => {
+    await axios.delete(
+      `${REQUEST_URL}/api/columns/${columnID}/tasks/${taskID}`
+    );
+    toggleDisplayState(NONE);
+    console.log(cardList);
+    setCardList(cardList.filter((card) => card.id !== taskID));
+  };
+  return (
+    <CancelBoxWrapper display={display}>
+      <TaskBox>
+        <TextArea>
+          <CancelTitleBox>
+            <CancelTitleSpan>정말 삭제하시겠습니까?</CancelTitleSpan>
+          </CancelTitleBox>
+        </TextArea>
+        <ButtonArea>
+          <ButtonBox onClick={toggleDisplayState}>
+            <Button type={CANCEL} name="취소" />
+          </ButtonBox>
+          <ButtonBox onClick={() => deleteData(delColID, delTasID)}>
+            <Button type={DELETE} name="삭제" />
+          </ButtonBox>
+        </ButtonArea>
+      </TaskBox>
+    </CancelBoxWrapper>
   );
 };
 
@@ -54,7 +107,6 @@ const ActiveTask = ({ closeActiveTask, display, columnID, postData }) => {
 
   useEffect(() => {
     if (localVisible === BLOCK && display === NONE) {
-      console.log('here', display);
       setAnimate(true);
       setTimeout(() => setAnimate(false), 2000);
     }
@@ -66,7 +118,7 @@ const ActiveTask = ({ closeActiveTask, display, columnID, postData }) => {
   }, [title, contents]);
 
   if (localVisible === NONE && !animate) return null;
-  console.log(title, contents, columnID);
+
   return (
     <TaskWrapper display={display}>
       <TaskBox>
@@ -154,6 +206,13 @@ const Card = ({
   columnID,
   deleteData,
   postData,
+  toggleDisplayState,
+  setDelColID,
+  setDelTasID,
+  delColID,
+  delTasID,
+  cardList,
+  setCardList,
 }) => {
   return {
     default: (
@@ -165,6 +224,9 @@ const Card = ({
         taskID={taskID}
         columnID={columnID}
         deleteData={deleteData}
+        toggleDisplayState={toggleDisplayState}
+        setDelColID={setDelColID}
+        setDelTasID={setDelTasID}
       />
     ),
     active: (
@@ -173,6 +235,19 @@ const Card = ({
         display={display}
         postData={postData}
         columnID={columnID}
+      />
+    ),
+    cancel: (
+      <CancelPopup
+        display={display}
+        columnID={columnID}
+        taskID={taskID}
+        deleteData={deleteData}
+        toggleDisplayState={toggleDisplayState}
+        delColID={delColID}
+        delTasID={delTasID}
+        cardList={cardList}
+        setCardList={setCardList}
       />
     ),
   }[cardStyle];
@@ -201,7 +276,6 @@ const TaskWrapper = styled.div`
   position: relative;
   animation: ${({ display }) => {
       if (display === NONE) {
-        console.log('there');
         return FadeOut;
       }
       if (display === BLOCK) {
@@ -216,6 +290,16 @@ const TaskWrapper = styled.div`
   & + div {
     margin-top: 20px;
   }
+`;
+
+const CancelBoxWrapper = styled.div`
+  position: absolute;
+  top: 44%;
+  left: 32%;
+  z-index: 10;
+  width: 280px;
+  height: 110px;
+  display: ${(props) => props.display};
 `;
 
 const TextArea = styled.div`
@@ -253,6 +337,20 @@ const TaskTitleSpan = styled.span`
 
   color: ${(props) => (props.type === 'deactivate' ? '#828282' : '#010101')};
   margin: 8px 0px;
+`;
+
+const CancelTitleSpan = styled.span`
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 23px;
+  margin: 8px 0px;
+  color: #222;
+  text-align: center;
+`;
+
+const CancelTitleBox = styled.span`
+  display: flex;
+  justify-content: center;
 `;
 
 const TaskContentsSpan = styled.span`

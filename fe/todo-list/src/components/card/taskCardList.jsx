@@ -2,21 +2,33 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import { ACTIVE, BLOCK, DEFAULT, REQUEST_URL } from '../const';
 import Card from './card';
+import qs from 'qs';
 
 const TaskCardList = ({
   list,
   closeActiveTask,
   display,
   columnID,
-  postData,
+  toggleDisplayState,
+  setDelColID,
+  setDelTasID,
 }) => {
   const [cardList, setCardList] = useState(list);
 
-  const deleteData = async (columnID, taskID) => {
-    await axios.delete(
-      `${REQUEST_URL}/api/columns/${columnID}/tasks/${taskID}`
-    );
-    setCardList(cardList.filter((card) => card.id !== taskID));
+  const postData = async (title, contents, columnID) => {
+    const data = { taskTitle: title || ' ', taskContent: contents || ' ' };
+    const options = {
+      method: 'POST',
+      headers: { 'content-type': 'application/x-www-form-urlencoded' },
+      data: qs.stringify(data),
+      url: `${REQUEST_URL}/api/columns/${columnID}/tasks`,
+    };
+    await axios(options);
+
+    setCardList([
+      { id: 'autumn', taskTitle: title, taskContent: contents },
+      ...cardList,
+    ]);
   };
 
   return (
@@ -38,7 +50,11 @@ const TaskCardList = ({
           display={BLOCK}
           columnID={columnID}
           taskID={id}
-          deleteData={deleteData}
+          toggleDisplayState={toggleDisplayState}
+          setDelColID={setDelColID}
+          setDelTasID={setDelTasID}
+          cardList={cardList}
+          setCardList={setCardList}
         />
       ))}
     </>

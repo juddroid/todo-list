@@ -4,6 +4,7 @@ export const DISABLED = 'disabled';
 export const ACTIVE = 'active';
 export const ADD = 'add';
 export const DELETE = 'delete';
+export const CANCEL = 'cancel';
 export const NONE = 'none';
 export const BLOCK = 'block';
 export const REQUEST_URL = 'http://13.209.60.60:8080';
