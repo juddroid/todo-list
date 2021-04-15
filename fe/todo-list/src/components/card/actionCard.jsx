@@ -58,7 +58,7 @@ const ActionTime = ({ createdDateTime }) => {
   const createdTime = new Date(createdDateTime);
   const currentTime = new Date();
   const [timeGap, setTimeGap] = useState();
-  console.log('timeGap', timeGap);
+
   useEffect(() => {
     setTimeGap(currentTime - createdTime - 32400000);
   }, []);
