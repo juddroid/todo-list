@@ -13,9 +13,16 @@ import {
   NONE,
   SUBMIT,
 } from '../const';
+import { postData } from '../postData';
 import { TaskContentsForm, TaskTitleForm } from './form';
 
-const ActiveTask = ({ closeActiveTask, display, columnID, postData }) => {
+const ActiveTask = ({
+  closeActiveTask,
+  display,
+  columnID,
+  cardList,
+  setCardList,
+}) => {
   const [inputValue, setInputValue] = useState({
     title: '',
     contents: '',
@@ -75,7 +82,11 @@ const ActiveTask = ({ closeActiveTask, display, columnID, postData }) => {
           <ButtonBox onClick={closeActiveTask}>
             <Button type={CANCEL} name={NAME_CANCEL} />
           </ButtonBox>
-          <ButtonBox onClick={() => postData(title, contents, columnID)}>
+          <ButtonBox
+            onClick={() =>
+              postData(title, contents, columnID, cardList, setCardList)
+            }
+          >
             <Button
               type={SUBMIT}
               name={NAME_SUBMIT}

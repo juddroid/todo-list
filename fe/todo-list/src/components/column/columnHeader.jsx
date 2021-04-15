@@ -4,12 +4,12 @@ import styled from 'styled-components';
 import TaskCardCount from '../card/taskCardCount';
 import { ADD, DELETE } from '../const';
 
-const ColumnHeader = ({ title, list, toggleDisplay, closeActiveTask }) => {
+const ColumnHeader = ({ title, cardList, toggleDisplay, closeActiveTask }) => {
   return (
     <ColumnHeaderContainer>
       <ColumnTitleBox>
         <ColumnTitle>{title}</ColumnTitle>
-        <TaskCardCount list={list} />
+        <TaskCardCount cardList={cardList} />
       </ColumnTitleBox>
       <ColumnButtonBox>
         <IconBox onClick={toggleDisplay}>

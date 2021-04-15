@@ -13,27 +13,28 @@ const Column = ({
   setDelTasID,
 }) => {
   const [display, setDisplay] = useState(NONE);
+  const [cardList, setCardList] = useState(taskList);
 
-  const toggleDisplay = (e) => {
-    e.preventDefault();
+  const toggleDisplay = () => {
     if (display === NONE) return setDisplay(BLOCK);
     return setDisplay(NONE);
   };
 
-  const closeActiveTask = (e) => {
-    e.preventDefault();
+  const closeActiveTask = () => {
     setDisplay(NONE);
   };
   return (
     <ColumnContainer>
       <ColumnHeader
         title={title}
-        list={taskList}
+        cardList={cardList}
+        setCardList={setCardList}
         toggleDisplay={toggleDisplay}
         closeActiveTask={closeActiveTask}
       />
       <TaskCardList
-        list={taskList}
+        cardList={cardList}
+        setCardList={setCardList}
         closeActiveTask={closeActiveTask}
         display={display}
         columnID={columnID}

@@ -12,7 +12,6 @@ const Card = ({
   taskID,
   columnID,
   deleteData,
-  postData,
   toggleDisplayState,
   setDelColID,
   setDelTasID,
@@ -40,8 +39,9 @@ const Card = ({
       <ActiveTask
         closeActiveTask={closeActiveTask}
         display={display}
-        postData={postData}
         columnID={columnID}
+        cardList={cardList}
+        setCardList={setCardList}
       />
     ),
     cancel: (
