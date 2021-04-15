@@ -1,7 +1,7 @@
 import React, { useEffect, useReducer } from 'react';
 import styled from 'styled-components';
 import ActionCardList from '../card/actionCardList';
-import { TITLE } from '../const';
+import { CLICK, ERROR_MSG, FLEX, NONE, TITLE, USER_ACTION } from '../const';
 import Icon from '../icon/icon';
 
 const Title = ({ title }) => {
@@ -14,28 +14,27 @@ const Title = ({ title }) => {
 
 const reducer = (state, action) => {
   switch (action.type) {
-    case 'CLICK':
-      return (state = 'flex');
-    case 'NONE':
-      return (state = 'none');
+    case CLICK:
+      return (state = FLEX);
+    case NONE:
+      return (state = NONE);
     default:
-      return new Error('Unhandled Action Type!');
+      return new Error(ERROR_MSG);
   }
 };
 
 const Header = () => {
   const [state, dispatch] = useReducer(reducer, null);
 
-  const changeState = (e) => {
-    e.preventDefault();
+  const changeState = () => {
     dispatch({
-      type: 'CLICK',
+      type: CLICK,
     });
   };
 
   const defaultState = () => {
     dispatch({
-      type: 'NONE',
+      type: NONE,
     });
   };
 
@@ -47,7 +46,7 @@ const Header = () => {
     <HeaderStyle>
       <Title title={TITLE} />
       <IconBox onClick={changeState}>
-        <Icon type="userAction" />
+        <Icon type={USER_ACTION} />
       </IconBox>
       <ActionCardList state={state} setState={defaultState} />
     </HeaderStyle>

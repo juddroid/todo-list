@@ -26,7 +26,7 @@ const TaskCardList = ({
     await axios(options);
 
     setCardList([
-      { id: 'autumn', taskTitle: title, taskContent: contents },
+      { id: `${Math.random()}`, taskTitle: title, taskContent: contents },
       ...cardList,
     ]);
   };

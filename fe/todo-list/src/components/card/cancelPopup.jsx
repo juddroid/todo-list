@@ -2,7 +2,14 @@ import axios from 'axios';
 import React from 'react';
 import styled from 'styled-components';
 import Button from '../button/button';
-import { CANCEL, DELETE, NONE, REQUEST_URL } from '../const';
+import {
+  CANCEL,
+  DELETE,
+  NAME_CANCEL,
+  NAME_DELETE,
+  NONE,
+  REQUEST_URL,
+} from '../const';
 
 const CancelPopup = ({
   display,
@@ -31,10 +38,10 @@ const CancelPopup = ({
         </TextArea>
         <ButtonArea>
           <ButtonBox onClick={toggleDisplayState}>
-            <Button type={CANCEL} name="취소" />
+            <Button type={CANCEL} name={NAME_CANCEL} />
           </ButtonBox>
           <ButtonBox onClick={() => deleteData(delColID, delTasID)}>
-            <Button type={DELETE} name="삭제" />
+            <Button type={DELETE} name={NAME_DELETE} />
           </ButtonBox>
         </ButtonArea>
       </TaskBox>
