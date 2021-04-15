@@ -1,16 +1,36 @@
-import React from 'react';
-import { ACTIVE, BLOCK, DEFAULT } from '../const';
+import axios from 'axios';
+import React, { useState } from 'react';
+import { ACTIVE, BLOCK, DEFAULT, REQUEST_URL } from '../const';
 import Card from './card';
+import qs from 'qs';
 
 const TaskCardList = ({
   list,
   closeActiveTask,
   display,
   columnID,
-  deleteData,
-  postData,
+  toggleDisplayState,
+  setDelColID,
+  setDelTasID,
 }) => {
-  console.log(list);
+  const [cardList, setCardList] = useState(list);
+
+  const postData = async (title, contents, columnID) => {
+    const data = { taskTitle: title || ' ', taskContent: contents || ' ' };
+    const options = {
+      method: 'POST',
+      headers: { 'content-type': 'application/x-www-form-urlencoded' },
+      data: qs.stringify(data),
+      url: `${REQUEST_URL}/api/columns/${columnID}/tasks`,
+    };
+    await axios(options);
+
+    setCardList([
+      { id: 'autumn', taskTitle: title, taskContent: contents },
+      ...cardList,
+    ]);
+  };
+
   return (
     <>
       <Card
@@ -20,7 +40,7 @@ const TaskCardList = ({
         postData={postData}
         columnID={columnID}
       />
-      {list.map(({ id, taskTitle, taskContent, authorName }) => (
+      {cardList.map(({ id, taskTitle, taskContent, authorName }) => (
         <Card
           key={id}
           cardStyle={DEFAULT}
@@ -30,7 +50,11 @@ const TaskCardList = ({
           display={BLOCK}
           columnID={columnID}
           taskID={id}
-          deleteData={deleteData}
+          toggleDisplayState={toggleDisplayState}
+          setDelColID={setDelColID}
+          setDelTasID={setDelTasID}
+          cardList={cardList}
+          setCardList={setCardList}
         />
       ))}
     </>
