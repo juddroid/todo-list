@@ -1,63 +1,57 @@
-import axios from 'axios';
 import React from 'react';
 import styled from 'styled-components';
 import Button from '../button/button';
-import {
-  CANCEL,
-  DELETE,
-  NAME_CANCEL,
-  NAME_DELETE,
-  NONE,
-  REQUEST_URL,
-} from '../const';
+import { CANCEL, DELETE, NAME_CANCEL, NAME_DELETE } from '../const';
+import { toggleDisplay } from '../util';
 
-const CancelPopup = ({
-  display,
-  toggleDisplayState,
-  delColID,
-  delTasID,
-  cardList,
-  setCardList,
-}) => {
-  const deleteData = async (columnID, taskID) => {
-    await axios.delete(
-      `${REQUEST_URL}/api/columns/${columnID}/tasks/${taskID}`
-    );
-    toggleDisplayState(NONE);
-    console.log(columnID, taskID);
-    setCardList(cardList.filter((card) => card.id !== taskID));
-  };
+const CancelPopup = ({ popupDisplay, setPopupDisplay, onRemove }) => {
   return (
-    <CancelBoxWrapper display={display}>
-      <TaskBox>
-        <TextArea>
-          <CancelTitleBox>
-            <CancelTitleSpan>정말 삭제하시겠습니까?</CancelTitleSpan>
-          </CancelTitleBox>
-        </TextArea>
-        <ButtonArea>
-          <ButtonBox onClick={toggleDisplayState}>
-            <Button type={CANCEL} name={NAME_CANCEL} />
-          </ButtonBox>
-          <ButtonBox onClick={() => deleteData(delColID, delTasID)}>
-            <Button type={DELETE} name={NAME_DELETE} />
-          </ButtonBox>
-        </ButtonArea>
-      </TaskBox>
-    </CancelBoxWrapper>
+    <PopupBackground popupDisplay={popupDisplay}>
+      <CancelBoxWrapper popupDisplay={popupDisplay}>
+        <TaskBox>
+          <TextArea>
+            <CancelTitleBox>
+              <CancelTitleSpan>정말 삭제하시겠습니까?</CancelTitleSpan>
+            </CancelTitleBox>
+          </TextArea>
+          <ButtonArea>
+            <ButtonBox
+              onClick={() => toggleDisplay(popupDisplay, setPopupDisplay)}
+            >
+              <Button type={CANCEL} name={NAME_CANCEL} />
+            </ButtonBox>
+            <ButtonBox onClick={onRemove}>
+              <Button type={DELETE} name={NAME_DELETE} />
+            </ButtonBox>
+          </ButtonArea>
+        </TaskBox>
+      </CancelBoxWrapper>
+    </PopupBackground>
   );
 };
 
 export default CancelPopup;
 
-const CancelBoxWrapper = styled.div`
+const PopupBackground = styled.div`
   position: absolute;
-  top: 44%;
-  left: 32%;
-  z-index: 10;
+  top: 0;
+  left: 0;
+  width: -webkit-fill-available;
+  height: 100vh;
+  padding: 0;
+  margin: 0;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 20;
+  display: ${(props) => props.popupDisplay};
+`;
+
+const CancelBoxWrapper = styled.div`
+  position: relative;
+  top: 30%;
+  left: 50%;
   width: 280px;
   height: 110px;
-  display: ${(props) => props.display};
+  display: ${(props) => props.popupDisplay};
 `;
 
 const CancelTitleSpan = styled.span`

@@ -2,13 +2,12 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import ColumnList from '../column/columnList';
-import { BLOCK, CANCEL, NONE, REQUEST_URL } from '../const';
+import { REQUEST_URL } from '../const';
 
 const Body = () => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [cancelButtonState, setCancleButtonSate] = useState(NONE);
 
   const fetchData = async () => {
     try {
@@ -32,23 +31,9 @@ const Body = () => {
   if (error) return <div>Error!!!</div>;
   if (!data) return null;
 
-  const toggleDisplayState = (columnID, taskID, setDelColID, setDelTasID) => {
-    if (typeof columnID === 'number' && typeof taskID === 'number') {
-      setDelColID(columnID);
-      setDelTasID(taskID);
-    }
-    if (cancelButtonState === NONE) return setCancleButtonSate(BLOCK);
-    return setCancleButtonSate(NONE);
-  };
-
   return (
     <BodyContainer>
-      <ColumnList
-        data={data}
-        cardStyle={CANCEL}
-        display={cancelButtonState}
-        toggleDisplayState={toggleDisplayState}
-      />
+      <ColumnList data={data} />
     </BodyContainer>
   );
 };

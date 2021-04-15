@@ -2,6 +2,7 @@ import React from 'react';
 import styled, { keyframes } from 'styled-components';
 import { BLOCK, DELETE, NONE } from '../const';
 import Icon from '../icon/icon';
+import { toggleDisplay } from '../util';
 import Caption from './caption';
 import TaskContents from './taskContents';
 import TaskTitle from './taskTitle';
@@ -11,18 +12,13 @@ const DefaultTask = ({
   content,
   author,
   display,
-  columnID,
-  taskID,
-  toggleDisplayState,
-  setDelColID,
-  setDelTasID,
+  popupDisplay,
+  setPopupDisplay,
 }) => {
   return (
     <TaskWrapper display={display} draggable={true}>
       <IconPosition
-        onClick={() =>
-          toggleDisplayState(columnID, taskID, setDelColID, setDelTasID)
-        }
+        onClick={() => toggleDisplay(popupDisplay, setPopupDisplay)}
       >
         <Icon type={DELETE} />
       </IconPosition>

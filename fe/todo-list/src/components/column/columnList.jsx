@@ -1,20 +1,18 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import Card from '../card/card';
+import { CANCEL, NONE } from '../const';
+import Popup from '../popup/popup';
 import Column from './column';
 
-const ColumnList = ({ data, cardStyle, display, toggleDisplayState }) => {
-  const [delColID, setDelColID] = useState('');
-  const [delTasID, setDelTasID] = useState('');
+const ColumnList = ({ data }) => {
+  const [popupDisplay, setPopupDisplay] = useState(NONE);
 
   return (
     <ColumnWrapper>
-      <Card
-        cardStyle={cardStyle}
-        display={display}
-        toggleDisplayState={toggleDisplayState}
-        delColID={delColID}
-        delTasID={delTasID}
+      <Popup
+        cardStyle={CANCEL}
+        popupDisplay={popupDisplay}
+        setPopupDisplay={setPopupDisplay}
       />
 
       {data.map(({ columnTitle, id, taskList }) => (
@@ -23,9 +21,8 @@ const ColumnList = ({ data, cardStyle, display, toggleDisplayState }) => {
           key={id}
           taskList={taskList}
           columnID={id}
-          toggleDisplayState={toggleDisplayState}
-          setDelColID={setDelColID}
-          setDelTasID={setDelTasID}
+          popupDisplay={popupDisplay}
+          setPopupDisplay={setPopupDisplay}
         />
       ))}
     </ColumnWrapper>

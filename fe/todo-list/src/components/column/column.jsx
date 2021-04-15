@@ -9,9 +9,8 @@ const Column = ({
   title,
   taskList,
   columnID,
-  toggleDisplayState,
-  setDelColID,
-  setDelTasID,
+  popupDisplay,
+  setPopupDisplay,
 }) => {
   const [display, setDisplay] = useState(NONE);
   const [cardList, setCardList] = useState(taskList);
@@ -30,10 +29,9 @@ const Column = ({
         setCardList={setCardList}
         closeActiveTask={() => closeActiveTask(setDisplay)}
         display={display}
+        popupDisplay={popupDisplay}
+        setPopupDisplay={setPopupDisplay}
         columnID={columnID}
-        toggleDisplayState={toggleDisplayState}
-        setDelColID={setDelColID}
-        setDelTasID={setDelTasID}
       />
     </ColumnContainer>
   );

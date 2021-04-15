@@ -6,11 +6,10 @@ const TaskCardList = ({
   closeActiveTask,
   display,
   columnID,
-  toggleDisplayState,
-  setDelColID,
-  setDelTasID,
   cardList,
   setCardList,
+  popupDisplay,
+  setPopupDisplay,
 }) => {
   return (
     <>
@@ -32,11 +31,10 @@ const TaskCardList = ({
           display={BLOCK}
           columnID={columnID}
           taskID={id}
-          toggleDisplayState={toggleDisplayState}
-          setDelColID={setDelColID}
-          setDelTasID={setDelTasID}
           cardList={cardList}
           setCardList={setCardList}
+          popupDisplay={popupDisplay}
+          setPopupDisplay={setPopupDisplay}
         />
       ))}
     </>
