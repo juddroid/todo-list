@@ -6,6 +6,7 @@ import Column from './column';
 const ColumnList = ({ data, cardStyle, display, toggleDisplayState }) => {
   const [delColID, setDelColID] = useState('');
   const [delTasID, setDelTasID] = useState('');
+
   return (
     <ColumnWrapper>
       <Card
@@ -15,6 +16,7 @@ const ColumnList = ({ data, cardStyle, display, toggleDisplayState }) => {
         delColID={delColID}
         delTasID={delTasID}
       />
+
       {data.map(({ columnTitle, id, taskList }) => (
         <Column
           title={columnTitle}

@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import ColumnHeader from './columnHeader';
 import TaskCardList from '../card/taskCardList';
-import { BLOCK, NONE } from '../const';
+import { NONE } from '../const';
+import { closeActiveTask, toggleDisplay } from '../util';
 
 const Column = ({
   title,
@@ -15,27 +16,19 @@ const Column = ({
   const [display, setDisplay] = useState(NONE);
   const [cardList, setCardList] = useState(taskList);
 
-  const toggleDisplay = () => {
-    if (display === NONE) return setDisplay(BLOCK);
-    return setDisplay(NONE);
-  };
-
-  const closeActiveTask = () => {
-    setDisplay(NONE);
-  };
   return (
     <ColumnContainer>
       <ColumnHeader
         title={title}
         cardList={cardList}
         setCardList={setCardList}
-        toggleDisplay={toggleDisplay}
-        closeActiveTask={closeActiveTask}
+        toggleDisplay={() => toggleDisplay(display, setDisplay)}
+        closeActiveTask={() => closeActiveTask(setDisplay)}
       />
       <TaskCardList
         cardList={cardList}
         setCardList={setCardList}
-        closeActiveTask={closeActiveTask}
+        closeActiveTask={() => closeActiveTask(setDisplay)}
         display={display}
         columnID={columnID}
         toggleDisplayState={toggleDisplayState}
