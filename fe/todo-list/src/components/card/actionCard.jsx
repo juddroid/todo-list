@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { FaCanadianMapleLeaf } from 'react-icons/fa';
 
@@ -54,11 +54,16 @@ const UserActionContents = ({
   }[action];
 };
 
-const ActionTime = ({ time }) => {
-  const createdDateTime = new Date(time);
-  const now = new Date();
-  const elapsedTime = now - createdDateTime;
-  const sec = elapsedTime / 1000;
+const ActionTime = ({ createdDateTime }) => {
+  const createdTime = new Date(createdDateTime);
+  const currentTime = new Date();
+  const [timeGap, setTimeGap] = useState();
+  console.log('timeGap', timeGap);
+  useEffect(() => {
+    setTimeGap(currentTime - createdTime - 32400000);
+  }, []);
+
+  const sec = timeGap / 1000;
   const min = sec / 60;
   const hour = min / 60;
   const days = hour / 24;
@@ -66,20 +71,23 @@ const ActionTime = ({ time }) => {
   let units = '';
 
   if (min < 1) {
-    times = parseInt(sec);
-    units = 'sec';
-  } else if (hour < 1) {
+    times = '방금';
+  } else if (min < 60) {
     times = parseInt(min);
-    units = 'mins';
-  } else if (days < 1) {
+    units = '분';
+  } else if (hour < 60) {
     times = parseInt(hour);
-    units = 'hours';
+    units = '시간';
+  } else if (days > 1) {
+    times = parseInt(days);
+    units = '일';
   }
 
   return (
     <ActionTimeBox>
       <span>
-        {times} {units} ago
+        {times}
+        {units} 전
       </span>
     </ActionTimeBox>
   );
@@ -104,7 +112,7 @@ const UserAction = ({ data }) => {
         toColumnTitle={toColumnTitle}
         taskTitle={taskTitle}
       />
-      <ActionTime time={createdDateTime} />
+      <ActionTime createdDateTime={createdDateTime} />
     </UserActionBox>
   );
 };
