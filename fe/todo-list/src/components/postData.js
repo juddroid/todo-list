@@ -7,7 +7,8 @@ export const postData = async (
   contents,
   columnID,
   cardList,
-  setCardList
+  setCardList,
+  setInputValue
 ) => {
   const data = { taskTitle: title || ' ', taskContent: contents || ' ' };
   const options = {
@@ -17,7 +18,10 @@ export const postData = async (
     url: `${REQUEST_URL}/api/columns/${columnID}/tasks`,
   };
   await axios(options);
-
+  setInputValue({
+    title: '',
+    contents: '',
+  });
   setCardList([
     { id: `${Math.random()}`, taskTitle: title, taskContent: contents },
     ...cardList,

@@ -84,7 +84,14 @@ const ActiveTask = ({
           </ButtonBox>
           <ButtonBox
             onClick={() =>
-              postData(title, contents, columnID, cardList, setCardList)
+              postData(
+                title,
+                contents,
+                columnID,
+                cardList,
+                setCardList,
+                setInputValue
+              )
             }
           >
             <Button
