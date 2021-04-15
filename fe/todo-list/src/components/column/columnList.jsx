@@ -1,12 +1,30 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
+import Card from '../card/card';
 import Column from './column';
 
-const ColumnList = ({ data }) => {
+const ColumnList = ({ data, cardStyle, display, toggleDisplayState }) => {
+  const [delColID, setDelColID] = useState('');
+  const [delTasID, setDelTasID] = useState('');
   return (
     <ColumnWrapper>
-      {data.map(({ id, columnTitle, taskList }) => (
-        <Column key={id} columnTitle={columnTitle} taskList={taskList} />
+      <Card
+        cardStyle={cardStyle}
+        display={display}
+        toggleDisplayState={toggleDisplayState}
+        delColID={delColID}
+        delTasID={delTasID}
+      />
+      {data.map(({ columnTitle, id, taskList }) => (
+        <Column
+          title={columnTitle}
+          key={id}
+          taskList={taskList}
+          columnID={id}
+          toggleDisplayState={toggleDisplayState}
+          setDelColID={setDelColID}
+          setDelTasID={setDelTasID}
+        />
       ))}
     </ColumnWrapper>
   );

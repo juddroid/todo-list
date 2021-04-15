@@ -19,13 +19,12 @@ const CancelPopup = ({
   cardList,
   setCardList,
 }) => {
-  console.log(cardList);
   const deleteData = async (columnID, taskID) => {
     await axios.delete(
       `${REQUEST_URL}/api/columns/${columnID}/tasks/${taskID}`
     );
     toggleDisplayState(NONE);
-    console.log(cardList);
+    console.log(columnID, taskID);
     setCardList(cardList.filter((card) => card.id !== taskID));
   };
   return (
