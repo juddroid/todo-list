@@ -71,8 +71,6 @@ const HeaderStyle = styled.div`
   align-items: center;
   padding: 20px;
   margin-bottom: 10px;
-  max-width: 1300px;
-  min-width: 1000px;
 `;
 
 const IconBox = styled.div`
