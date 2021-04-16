@@ -57,8 +57,8 @@ const ActionCardContainer = styled.div`
   padding: 30px 40px 40px 40px;
   box-sizing: content-box;
   background: #fff;
-  width: 332px;
-  height: fit-content;
+  width: 350px;
+  height: 850px;
   right: 0;
   top: -10px;
   opacity: ${(props) => (props.state === FLEX ? '100%' : '0%')};
@@ -83,4 +83,6 @@ const IconPosition = styled.div`
 const ActionCardListBox = styled.ul`
   display: flex;
   flex-direction: column;
+  height: 800px;
+  overflow-y: scroll;
 `;

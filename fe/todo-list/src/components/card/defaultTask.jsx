@@ -1,12 +1,29 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled, { keyframes } from 'styled-components';
-import { BLOCK, DELETE, NONE } from '../const';
+import {
+  ACTIVE,
+  BLOCK,
+  CANCEL,
+  DELETE,
+  DISABLED,
+  FLEX,
+  INPUT_CONTENTS,
+  INPUT_TITLE,
+  NAME_CANCEL,
+  NAME_MODIFY,
+  NAME_SUBMIT,
+  NONE,
+  SUBMIT,
+} from '../const';
 import { deleteData } from '../deleteData';
 import Icon from '../icon/icon';
 import { closeActiveTask, toggleDisplay } from '../util';
 import Caption from './caption';
+import { TaskContentsForm, TaskTitleForm } from './form';
 import TaskContents from './taskContents';
 import TaskTitle from './taskTitle';
+import Button from '../button/button';
+import { putData } from '../putData';
 
 const DefaultTask = ({
   title,
@@ -21,6 +38,27 @@ const DefaultTask = ({
   setPopupDisplay,
   setOnRemove,
 }) => {
+  const [activeDisplay, setActiveDisplay] = useState(NONE);
+  const [defaultDisaply, setDefaultDisplay] = useState(BLOCK);
+  const [inputValue, setInputValue] = useState({
+    inputTitle: title,
+    inputContents: content,
+  });
+  const [buttonState, setButtonState] = useState(DISABLED);
+  const { inputTitle, inputContents } = inputValue;
+  const onChangeUserInput = (e) => {
+    const { name, value } = e.target;
+    setInputValue({
+      ...inputValue,
+      [name]: value,
+    });
+  };
+
+  const changeButtonState = (title, contents) => {
+    if (title === '' && contents === '') return setButtonState(DISABLED);
+    return setButtonState(ACTIVE);
+  };
+
   const onRemove = (
     columnID,
     taskID,
@@ -28,9 +66,6 @@ const DefaultTask = ({
     setCardList,
     setPopupDisplay
   ) => {
-    console.log(cardList);
-    console.log(columnID);
-    console.log(taskID);
     deleteData(columnID, taskID, cardList, setCardList);
     closeActiveTask(setPopupDisplay);
   };
@@ -42,22 +77,63 @@ const DefaultTask = ({
     );
   };
 
+  const onToggle = () => {
+    toggleDisplay(activeDisplay, setActiveDisplay, FLEX);
+    toggleDisplay(defaultDisaply, setDefaultDisplay, FLEX);
+  };
+
+  const handleModifyButtonClick = () => {
+    putData(inputTitle, inputContents, columnID, taskID, cardList, setCardList);
+    onToggle();
+  };
+
+  useEffect(() => {
+    changeButtonState(inputTitle, inputContents);
+  }, [inputTitle, inputContents]);
+
   return (
-    <TaskWrapper display={display} draggable={true}>
-      <IconPosition onClick={onClick}>
+    <TaskWrapper display={display} draggable={true} onDoubleClick={onToggle}>
+      <IconPosition onClick={onClick} display={defaultDisaply}>
         <Icon type={DELETE} />
       </IconPosition>
       <TaskBox>
-        <TextArea>
+        <TextArea display={defaultDisaply}>
           <TaskTitle title={title} />
           <TaskContents content={content} />
           <Caption author={author} />
         </TextArea>
+        <TextArea display={activeDisplay}>
+          <TitleBox>
+            <TaskForm>
+              <TaskTitleForm
+                name={INPUT_TITLE}
+                value={inputTitle}
+                onChange={onChangeUserInput}
+              />
+              <TaskContentsForm
+                name={INPUT_CONTENTS}
+                value={inputContents}
+                onChange={onChangeUserInput}
+              />
+            </TaskForm>
+          </TitleBox>
+        </TextArea>
+        <ButtonArea display={activeDisplay}>
+          <ButtonBox onClick={onToggle}>
+            <Button type={CANCEL} name={NAME_CANCEL} />
+          </ButtonBox>
+          <ButtonBox onClick={handleModifyButtonClick}>
+            <Button
+              type={SUBMIT}
+              name={NAME_MODIFY}
+              buttonState={buttonState}
+            />
+          </ButtonBox>
+        </ButtonArea>
       </TaskBox>
     </TaskWrapper>
   );
 };
-
 export default DefaultTask;
 
 const TaskWrapper = styled.div`
@@ -84,6 +160,7 @@ const IconPosition = styled.div`
   position: absolute;
   top: 15px;
   right: 10px;
+  display: ${(props) => props.display};
 `;
 
 const TaskBox = styled.div`
@@ -100,7 +177,7 @@ const TaskBox = styled.div`
 `;
 
 const TextArea = styled.div`
-  display: flex;
+  display: ${(props) => props.display};
   flex-direction: column;
 `;
 
@@ -119,4 +196,28 @@ const FadeOut = keyframes`
   to {
     opacity: 0;
   }
+`;
+
+const ButtonArea = styled.div`
+  display: ${(props) => props.display};
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const ButtonBox = styled.div`
+  width: fit-content;
+  height: fit-content;
+`;
+
+const TaskForm = styled.form`
+  width: 100%;
+  height: 100%;
+  padding: 0 4px;
+  box-shadow: 0px 0px 2px #828282;
+  border-radius: 10px;
+  margin: 4px 0 8px 0;
+`;
+const TitleBox = styled.div`
+  display: flex;
+  justify-content: space-between;
 `;
