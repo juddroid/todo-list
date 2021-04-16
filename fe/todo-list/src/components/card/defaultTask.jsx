@@ -1,8 +1,9 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
 import { BLOCK, DELETE, NONE } from '../const';
+import { deleteData } from '../deleteData';
 import Icon from '../icon/icon';
-import { toggleDisplay } from '../util';
+import { closeActiveTask, toggleDisplay } from '../util';
 import Caption from './caption';
 import TaskContents from './taskContents';
 import TaskTitle from './taskTitle';
@@ -13,13 +14,37 @@ const DefaultTask = ({
   author,
   display,
   popupDisplay,
+  columnID,
+  taskID,
+  cardList,
+  setCardList,
   setPopupDisplay,
+  setOnRemove,
 }) => {
+  const onRemove = (
+    columnID,
+    taskID,
+    cardList,
+    setCardList,
+    setPopupDisplay
+  ) => {
+    console.log(cardList);
+    console.log(columnID);
+    console.log(taskID);
+    deleteData(columnID, taskID, cardList, setCardList);
+    closeActiveTask(setPopupDisplay);
+  };
+
+  const onClick = () => {
+    toggleDisplay(popupDisplay, setPopupDisplay);
+    setOnRemove(() => () =>
+      onRemove(columnID, taskID, cardList, setCardList, setPopupDisplay)
+    );
+  };
+
   return (
     <TaskWrapper display={display} draggable={true}>
-      <IconPosition
-        onClick={() => toggleDisplay(popupDisplay, setPopupDisplay)}
-      >
+      <IconPosition onClick={onClick}>
         <Icon type={DELETE} />
       </IconPosition>
       <TaskBox>

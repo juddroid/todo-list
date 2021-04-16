@@ -6,6 +6,7 @@ import Column from './column';
 
 const ColumnList = ({ data }) => {
   const [popupDisplay, setPopupDisplay] = useState(NONE);
+  const [onRemove, setOnRemove] = useState(() => () => {});
 
   return (
     <ColumnWrapper>
@@ -13,6 +14,7 @@ const ColumnList = ({ data }) => {
         cardStyle={CANCEL}
         popupDisplay={popupDisplay}
         setPopupDisplay={setPopupDisplay}
+        onRemove={onRemove}
       />
 
       {data.map(({ columnTitle, id, taskList }) => (
@@ -23,6 +25,7 @@ const ColumnList = ({ data }) => {
           columnID={id}
           popupDisplay={popupDisplay}
           setPopupDisplay={setPopupDisplay}
+          setOnRemove={setOnRemove}
         />
       ))}
     </ColumnWrapper>

@@ -10,6 +10,7 @@ const TaskCardList = ({
   setCardList,
   popupDisplay,
   setPopupDisplay,
+  setOnRemove,
 }) => {
   return (
     <>
@@ -35,6 +36,7 @@ const TaskCardList = ({
           setCardList={setCardList}
           popupDisplay={popupDisplay}
           setPopupDisplay={setPopupDisplay}
+          setOnRemove={setOnRemove}
         />
       ))}
     </>

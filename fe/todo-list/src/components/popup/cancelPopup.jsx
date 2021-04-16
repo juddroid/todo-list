@@ -5,9 +5,10 @@ import { CANCEL, DELETE, NAME_CANCEL, NAME_DELETE } from '../const';
 import { toggleDisplay } from '../util';
 
 const CancelPopup = ({ popupDisplay, setPopupDisplay, onRemove }) => {
+  console.dir(onRemove);
   return (
     <PopupBackground popupDisplay={popupDisplay}>
-      <CancelBoxWrapper popupDisplay={popupDisplay}>
+      <CancelBoxWrapper>
         <TaskBox>
           <TextArea>
             <CancelTitleBox>
@@ -33,7 +34,7 @@ const CancelPopup = ({ popupDisplay, setPopupDisplay, onRemove }) => {
 export default CancelPopup;
 
 const PopupBackground = styled.div`
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: -webkit-fill-available;
@@ -48,7 +49,7 @@ const PopupBackground = styled.div`
 const CancelBoxWrapper = styled.div`
   position: relative;
   top: 30%;
-  left: 50%;
+  left: 30%;
   width: 280px;
   height: 110px;
   display: ${(props) => props.popupDisplay};

@@ -17,13 +17,15 @@ export const postData = async (
     data: qs.stringify(data),
     url: `${REQUEST_URL}/api/columns/${columnID}/tasks`,
   };
-  await axios(options);
+  await axios(options).then((response) => {
+    const taskID = response.data.task.id;
+    setCardList([
+      { id: taskID, taskTitle: title, taskContent: contents },
+      ...cardList,
+    ]);
+  });
   setInputValue({
     title: '',
     contents: '',
   });
-  setCardList([
-    { id: `${Math.random()}`, taskTitle: title, taskContent: contents },
-    ...cardList,
-  ]);
 };

@@ -11,6 +11,7 @@ const Column = ({
   columnID,
   popupDisplay,
   setPopupDisplay,
+  setOnRemove,
 }) => {
   const [display, setDisplay] = useState(NONE);
   const [cardList, setCardList] = useState(taskList);
@@ -32,6 +33,7 @@ const Column = ({
         popupDisplay={popupDisplay}
         setPopupDisplay={setPopupDisplay}
         columnID={columnID}
+        setOnRemove={setOnRemove}
       />
     </ColumnContainer>
   );

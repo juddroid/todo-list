@@ -14,6 +14,7 @@ const Card = ({
   setCardList,
   popupDisplay,
   setPopupDisplay,
+  setOnRemove,
 }) => {
   return {
     default: (
@@ -28,6 +29,7 @@ const Card = ({
         setCardList={setCardList}
         popupDisplay={popupDisplay}
         setPopupDisplay={setPopupDisplay}
+        setOnRemove={setOnRemove}
       />
     ),
     active: (
