@@ -18,9 +18,14 @@ export const postData = async (
     url: `${REQUEST_URL}/api/columns/${columnID}/tasks`,
   };
   await axios(options).then((response) => {
-    const taskID = response.data.task.id;
+    const { id, taskTitle, taskContent, authorName } = response.data.task;
     setCardList([
-      { id: taskID, taskTitle: title, taskContent: contents },
+      {
+        id: id,
+        taskTitle: taskTitle,
+        taskContent: taskContent,
+        authorName: authorName,
+      },
       ...cardList,
     ]);
   });
