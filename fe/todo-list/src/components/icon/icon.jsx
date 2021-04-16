@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { FaPlus, FaTimes, FaBars } from 'react-icons/fa';
+import { USER_ACTION } from '../const';
 
 const AddButton = ({ type }) => {
   return (
@@ -33,7 +34,7 @@ const Icon = ({ type }) => {
 };
 
 const IconButton = styled.button`
-  color: ${(props) => (props.type === 'userAction' ? '#010101' : '#bdbdbd')};
+  color: ${(props) => (props.type === USER_ACTION ? '#010101' : '#bdbdbd')};
   border: none;
   background: transparent;
   outline: none;

@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { CONTENTS_MSG, TITLE_MSG, OFF } from '../const';
 
 export const TaskTitleForm = ({ name, value, onChange }) => {
   return (
@@ -7,9 +8,9 @@ export const TaskTitleForm = ({ name, value, onChange }) => {
       name={name}
       value={value}
       onChange={onChange}
-      placeholder="제목을 입력하세요"
+      placeholder={TITLE_MSG}
       autoFocus
-      autoComplete="off"
+      autoComplete={OFF}
     />
   );
 };
@@ -20,7 +21,7 @@ export const TaskContentsForm = ({ name, value, onChange }) => {
       name={name}
       value={value}
       onChange={onChange}
-      placeholder="내용을 입력하세요"
+      placeholder={CONTENTS_MSG}
     />
   );
 };

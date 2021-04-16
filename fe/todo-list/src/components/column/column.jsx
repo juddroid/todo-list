@@ -2,44 +2,38 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import ColumnHeader from './columnHeader';
 import TaskCardList from '../card/taskCardList';
-import { BLOCK, NONE } from '../const';
+import { NONE } from '../const';
+import { closeActiveTask, toggleDisplay } from '../util';
 
 const Column = ({
   title,
   taskList,
   columnID,
-  toggleDisplayState,
-  setDelColID,
-  setDelTasID,
+  popupDisplay,
+  setPopupDisplay,
+  setOnRemove,
 }) => {
   const [display, setDisplay] = useState(NONE);
+  const [cardList, setCardList] = useState(taskList);
 
-  const toggleDisplay = (e) => {
-    e.preventDefault();
-    if (display === NONE) return setDisplay(BLOCK);
-    return setDisplay(NONE);
-  };
-
-  const closeActiveTask = (e) => {
-    e.preventDefault();
-    setDisplay(NONE);
-  };
   return (
     <ColumnContainer>
       <ColumnHeader
         title={title}
-        list={taskList}
-        toggleDisplay={toggleDisplay}
-        closeActiveTask={closeActiveTask}
+        cardList={cardList}
+        setCardList={setCardList}
+        toggleDisplay={() => toggleDisplay(display, setDisplay)}
+        closeActiveTask={() => closeActiveTask(setDisplay)}
       />
       <TaskCardList
-        list={taskList}
-        closeActiveTask={closeActiveTask}
+        cardList={cardList}
+        setCardList={setCardList}
+        closeActiveTask={() => closeActiveTask(setDisplay)}
         display={display}
+        popupDisplay={popupDisplay}
+        setPopupDisplay={setPopupDisplay}
         columnID={columnID}
-        toggleDisplayState={toggleDisplayState}
-        setDelColID={setDelColID}
-        setDelTasID={setDelTasID}
+        setOnRemove={setOnRemove}
       />
     </ColumnContainer>
   );

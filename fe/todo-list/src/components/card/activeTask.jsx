@@ -1,10 +1,28 @@
 import React, { useEffect, useState } from 'react';
 import styled, { keyframes } from 'styled-components';
 import Button from '../button/button';
-import { ACTIVE, BLOCK, DISABLED, NONE } from '../const';
+import {
+  ACTIVE,
+  BLOCK,
+  CANCEL,
+  DISABLED,
+  NAME_CANCEL,
+  NAME_CONTENTS,
+  NAME_SUBMIT,
+  NAME_TITLE,
+  NONE,
+  SUBMIT,
+} from '../const';
+import { postData } from '../postData';
 import { TaskContentsForm, TaskTitleForm } from './form';
 
-const ActiveTask = ({ closeActiveTask, display, columnID, postData }) => {
+const ActiveTask = ({
+  closeActiveTask,
+  display,
+  columnID,
+  cardList,
+  setCardList,
+}) => {
   const [inputValue, setInputValue] = useState({
     title: '',
     contents: '',
@@ -48,12 +66,12 @@ const ActiveTask = ({ closeActiveTask, display, columnID, postData }) => {
           <TitleBox>
             <TaskForm>
               <TaskTitleForm
-                name="title"
+                name={NAME_TITLE}
                 value={title}
                 onChange={onChangeUserInput}
               />
               <TaskContentsForm
-                name="contents"
+                name={NAME_CONTENTS}
                 value={contents}
                 onChange={onChangeUserInput}
               />
@@ -62,10 +80,25 @@ const ActiveTask = ({ closeActiveTask, display, columnID, postData }) => {
         </TextArea>
         <ButtonArea>
           <ButtonBox onClick={closeActiveTask}>
-            <Button type="cancel" name="취소" />
+            <Button type={CANCEL} name={NAME_CANCEL} />
           </ButtonBox>
-          <ButtonBox onClick={() => postData(title, contents, columnID)}>
-            <Button type="submit" name="등록" buttonState={buttonState} />
+          <ButtonBox
+            onClick={() =>
+              postData(
+                title,
+                contents,
+                columnID,
+                cardList,
+                setCardList,
+                setInputValue
+              )
+            }
+          >
+            <Button
+              type={SUBMIT}
+              name={NAME_SUBMIT}
+              buttonState={buttonState}
+            />
           </ButtonBox>
         </ButtonArea>
       </TaskBox>

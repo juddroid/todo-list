@@ -1,5 +1,4 @@
 import ActiveTask from './activeTask';
-import CancelPopup from './cancelPopup';
 import DefaultTask from './defaultTask';
 
 const Card = ({
@@ -11,15 +10,11 @@ const Card = ({
   display,
   taskID,
   columnID,
-  deleteData,
-  postData,
-  toggleDisplayState,
-  setDelColID,
-  setDelTasID,
-  delColID,
-  delTasID,
   cardList,
   setCardList,
+  popupDisplay,
+  setPopupDisplay,
+  setOnRemove,
 }) => {
   return {
     default: (
@@ -30,29 +25,18 @@ const Card = ({
         display={display}
         taskID={taskID}
         columnID={columnID}
-        deleteData={deleteData}
-        toggleDisplayState={toggleDisplayState}
-        setDelColID={setDelColID}
-        setDelTasID={setDelTasID}
+        cardList={cardList}
+        setCardList={setCardList}
+        popupDisplay={popupDisplay}
+        setPopupDisplay={setPopupDisplay}
+        setOnRemove={setOnRemove}
       />
     ),
     active: (
       <ActiveTask
         closeActiveTask={closeActiveTask}
         display={display}
-        postData={postData}
         columnID={columnID}
-      />
-    ),
-    cancel: (
-      <CancelPopup
-        display={display}
-        columnID={columnID}
-        taskID={taskID}
-        deleteData={deleteData}
-        toggleDisplayState={toggleDisplayState}
-        delColID={delColID}
-        delTasID={delTasID}
         cardList={cardList}
         setCardList={setCardList}
       />

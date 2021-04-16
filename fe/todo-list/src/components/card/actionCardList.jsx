@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { DELETE, REQUEST_URL } from '../const';
+import { DELETE, FLEX, REQUEST_URL } from '../const';
 import Icon from '../icon/icon';
 import ActionCard from './actionCard';
 
@@ -61,9 +61,9 @@ const ActionCardContainer = styled.div`
   height: fit-content;
   right: 0;
   top: -10px;
-  opacity: ${(props) => (props.state === 'flex' ? '100%' : '0%')};
+  opacity: ${(props) => (props.state === FLEX ? '100%' : '0%')};
   transform: ${(props) =>
-    props.state === 'flex'
+    props.state === FLEX
       ? 'translate3d(30px, 0px, 0px)'
       : 'translate3d(430px, 0px, 0px)'};
   transition-duration: 0.4s;
