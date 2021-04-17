@@ -5,7 +5,6 @@ import { CANCEL, DELETE, NAME_CANCEL, NAME_DELETE } from '../const';
 import { toggleDisplay } from '../util';
 
 const CancelPopup = ({ popupDisplay, setPopupDisplay, onRemove }) => {
-  console.dir(onRemove);
   return (
     <PopupBackground popupDisplay={popupDisplay}>
       <CancelBoxWrapper>

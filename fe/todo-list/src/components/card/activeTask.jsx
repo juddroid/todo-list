@@ -139,7 +139,7 @@ const TaskBox = styled.div`
   box-shadow: 0px 1px 30px rgba(224, 224, 224, 0.3);
   border-radius: 6px;
   padding: 10px 16px;
-  border: 1px solid #fff;
+  border: 1px solid #3362ff;
 
   ${IconPosition}:hover + & {
     background: #ffeeec;

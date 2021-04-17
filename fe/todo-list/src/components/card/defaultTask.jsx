@@ -11,7 +11,6 @@ import {
   INPUT_TITLE,
   NAME_CANCEL,
   NAME_MODIFY,
-  NAME_SUBMIT,
   NONE,
   SUBMIT,
 } from '../const';
@@ -39,7 +38,7 @@ const DefaultTask = ({
   setOnRemove,
 }) => {
   const [activeDisplay, setActiveDisplay] = useState(NONE);
-  const [defaultDisaply, setDefaultDisplay] = useState(BLOCK);
+  const [defaultDisaply, setDefaultDisplay] = useState(FLEX);
   const [inputValue, setInputValue] = useState({
     inputTitle: title,
     inputContents: content,
@@ -96,7 +95,7 @@ const DefaultTask = ({
       <IconPosition onClick={onClick} display={defaultDisaply}>
         <Icon type={DELETE} />
       </IconPosition>
-      <TaskBox>
+      <TaskBox display={defaultDisaply}>
         <TextArea display={defaultDisaply}>
           <TaskTitle title={title} />
           <TaskContents content={content} />
@@ -154,6 +153,9 @@ const TaskWrapper = styled.div`
   & + div {
     margin-top: 20px;
   }
+  &:hover {
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1);
+  }
 `;
 
 const IconPosition = styled.div`
@@ -168,7 +170,7 @@ const TaskBox = styled.div`
   box-shadow: 0px 1px 30px rgba(224, 224, 224, 0.3);
   border-radius: 6px;
   padding: 10px 16px;
-  border: 1px solid #fff;
+  border: 1px solid ${(props) => (props.display === FLEX ? `#fff` : `#0075DE`)};
 
   ${IconPosition}:hover + & {
     background: #ffeeec;
