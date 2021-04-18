@@ -1,24 +1,26 @@
 import React from 'react';
 import styled from 'styled-components';
+import { FaPlus, FaTimes, FaBars } from 'react-icons/fa';
+import { USER_ACTION } from '../const';
 
 const AddButton = ({ type }) => {
   return (
     <IconButton type={type}>
-      <i className="fas fa-plus"></i>
+      <FaPlus />
     </IconButton>
   );
 };
 const DeleteButton = ({ type }) => {
   return (
     <IconButton type={type}>
-      <i className="fas fa-times"></i>
+      <FaTimes />
     </IconButton>
   );
 };
 const UserActionButton = ({ type }) => {
   return (
     <IconButton type={type}>
-      <i className="fas fa-bars"></i>
+      <FaBars />
     </IconButton>
   );
 };
@@ -31,19 +33,18 @@ const Icon = ({ type }) => {
   }[type];
 };
 
-export default Icon;
-
 const IconButton = styled.button`
-  color: ${(props) => (props.type === 'userAction' ? '#010101' : '#bdbdbd')};
+  color: ${(props) => (props.type === USER_ACTION ? '#010101' : '#bdbdbd')};
   border: none;
-  background-color: transparent;
+  background: transparent;
   outline: none;
   cursor: pointer;
   font-size: 16px;
-
   &:hover {
     color: ${(props) => {
       return { add: '#0075DE', delete: '#FF4343' }[props.type] || '#505050';
     }};
   }
 `;
+
+export default Icon;
