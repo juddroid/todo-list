@@ -22,7 +22,6 @@ public class TodoColumnController {
         this.todoColumnService = todoColumnService;
     }
 
-    @CrossOrigin
     @GetMapping
     public ResponseEntity<ShowColumnListDto> showColumnList() {
         TodoUser todoUser = todoUserService.findUser(1L);

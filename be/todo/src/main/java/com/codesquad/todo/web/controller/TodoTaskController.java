@@ -22,7 +22,6 @@ public class TodoTaskController {
         this.todoTaskService = todoTaskService;
     }
 
-    @CrossOrigin
     @PostMapping
     public ResponseEntity<CreateTodoTaskDto> createTask(@PathVariable Long columnId, @Valid TodoTaskParameterDto todoTaskParameterDto) {
         TodoUser todoUser = todoUserService.findUser(1L);
@@ -30,21 +29,18 @@ public class TodoTaskController {
         return ResponseEntity.ok(createTodoTaskDto);
     }
 
-    @CrossOrigin
     @DeleteMapping("/{taskId}")
     public void removeTask(@PathVariable Long columnId, @PathVariable Long taskId) {
         TodoUser todoUser = todoUserService.findUser(1L);
         todoTaskService.removeTask(todoUser, columnId, taskId);
     }
 
-    @CrossOrigin
     @PutMapping("/{taskId}")
     public void updateTask(@PathVariable Long columnId, @PathVariable Long taskId, @Valid TodoTaskParameterDto todoTaskParameterDto) {
         TodoUser todoUser = todoUserService.findUser(1L);
         todoTaskService.updateTask(todoUser, columnId, taskId, todoTaskParameterDto);
     }
 
-    @CrossOrigin
     @PutMapping("/{taskId}/move")
     public void moveTask(@PathVariable Long columnId, @PathVariable Long taskId,
                          Long nextColumnId, int newTaskPosition) {

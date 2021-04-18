@@ -22,7 +22,6 @@ public class TodoLogController {
         this.todoUserService = todoUserService;
     }
 
-    @CrossOrigin
     @GetMapping
     public ResponseEntity<ShowTodoLogListDto> showTodoLogList() {
         TodoUser todoUser = todoUserService.findUser(1L);
