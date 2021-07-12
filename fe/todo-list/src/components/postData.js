@@ -17,18 +17,17 @@ export const postData = async (
     data: qs.stringify(data),
     url: `${REQUEST_URL}/api/columns/${columnID}/tasks`,
   };
-  await axios(options).then((response) => {
-    const { id, taskTitle, taskContent, authorName } = response.data.task;
-    setCardList([
-      {
-        id: id,
-        taskTitle: taskTitle,
-        taskContent: taskContent,
-        authorName: authorName,
-      },
-      ...cardList,
-    ]);
-  });
+  const response = await axios(options);
+  const { id, taskTitle, taskContent, authorName } = response.data.task;
+  setCardList([
+    {
+      id: id,
+      taskTitle: taskTitle,
+      taskContent: taskContent,
+      authorName: authorName,
+    },
+    ...cardList,
+  ]);
   setInputValue({
     title: '',
     contents: '',
