@@ -9,27 +9,33 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/columns")
 public class ColumnController {
 
     @GetMapping
-    public List<ColumnDto> showColumnList() {
-        List<ColumnDto> columnList = new ArrayList<>();
-        User author = new User(1, "라쿠운", "Racoon", "1234", "");
+    public Map<String, Object> showColumnList() {
+        Map<String, Object> responseMap = new HashMap<>();
 
-        Column todoColumn = new Column(1, "TODO");
-        todoColumn.getTaskList().add(new Task(1, "task1", "taskContent1", author, todoColumn));
-        todoColumn.getTaskList().add(new Task(2, "task2", "taskContent2", author, todoColumn));
-        columnList.add(new ColumnDto(todoColumn));
+        List<ColumnDto> columns = new ArrayList<>();
+        User author = new User(1L, "라쿠운", "Racoon", "1234", "");
 
-        Column inProgressColumn = new Column(2, "IN_PROGRESS");
-        inProgressColumn.getTaskList().add(new Task(3, "task3", "taskContent3", author, inProgressColumn));
-        columnList.add(new ColumnDto(inProgressColumn));
+        Column todoColumn = new Column(1L, "TODO");
+        todoColumn.addTask(new Task(1L, "task1", "taskContent1", author, todoColumn));
+        todoColumn.addTask(new Task(2L, "task2", "taskContent2", author, todoColumn));
+        columns.add(new ColumnDto(todoColumn));
 
-        return columnList;
+        Column inProgressColumn = new Column(2L, "IN_PROGRESS");
+        inProgressColumn.addTask(new Task(3L, "task3", "taskContent3", author, inProgressColumn));
+        columns.add(new ColumnDto(inProgressColumn));
+
+
+        responseMap.put("columns", columns);
+        return responseMap;
     }
 
 }
